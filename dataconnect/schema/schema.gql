@@ -1,0 +1,288 @@
+# NSRIT Connect relational schema for Firebase Data Connect / SQL Connect.
+# Roles and statuses are stored as strings because Data Connect table fields are
+# safest across generated SDKs when represented as varchar values.
+
+type Branch @table(name: "branches", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String! @col(dataType: "varchar(120)")
+  branchCode: String! @col(dataType: "varchar(2)")
+  address: String
+  city: String @col(dataType: "varchar(80)")
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+type Wing @table(name: "wings", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  branch: Branch!
+  name: String! @col(dataType: "varchar(80)")
+  code: String @col(dataType: "varchar(20)")
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Wing {
+  branchId: UUID!
+}
+
+type AcademicClass @table(name: "academic_classes", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  branch: Branch!
+  wing: Wing!
+  name: String! @col(dataType: "varchar(80)")
+  displayOrder: Int @default(value: 0)
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type AcademicClass {
+  branchId: UUID!
+  wingId: UUID!
+}
+
+type Section @table(name: "sections", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  branch: Branch!
+  wing: Wing!
+  academicClass: AcademicClass!
+  name: String! @col(dataType: "varchar(40)")
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Section {
+  branchId: UUID!
+  wingId: UUID!
+  academicClassId: UUID!
+}
+
+type User @table(name: "users", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  firebaseUID: String! @col(dataType: "varchar(128)")
+  fullName: String! @col(dataType: "varchar(140)")
+  countryCode: String! @col(dataType: "varchar(5)")
+  phoneNumber: String! @col(dataType: "varchar(20)")
+  role: String! @col(dataType: "varchar(30)")
+  branch: Branch
+  wing: Wing
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type User {
+  branchId: UUID
+  wingId: UUID
+}
+
+type Parent @table(name: "parents", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  user: User!
+  branch: Branch!
+  fullName: String! @col(dataType: "varchar(140)")
+  countryCode: String! @col(dataType: "varchar(5)")
+  phoneNumber: String! @col(dataType: "varchar(20)")
+  address: String
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Parent {
+  userId: UUID!
+  branchId: UUID!
+}
+
+type StudentIdSequence
+  @table(name: "student_id_sequences", key: ["admissionYear", "branchCode"]) {
+  admissionYear: Int!
+  branchCode: String! @col(dataType: "varchar(2)")
+  lastSerialNumber: Int! @default(value: 0)
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+type Student @table(name: "students", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  studentId: String! @col(dataType: "varchar(10)")
+  admissionYear: Int!
+  branchCode: String! @col(dataType: "varchar(2)")
+  serialNumber: Int!
+  fullName: String! @col(dataType: "varchar(140)")
+  gender: String @col(dataType: "varchar(20)")
+  dateOfBirth: Date
+  branch: Branch!
+  wing: Wing
+  academicClass: AcademicClass!
+  section: Section!
+  parent: Parent!
+  countryCode: String @col(dataType: "varchar(5)")
+  phoneNumber: String @col(dataType: "varchar(20)")
+  address: String
+  admissionDate: Date!
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Student {
+  branchId: UUID!
+  wingId: UUID
+  academicClassId: UUID!
+  sectionId: UUID!
+  parentId: UUID!
+}
+
+type TeacherAssignment @table(name: "teacher_assignments", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  teacher: User!
+  branch: Branch!
+  wing: Wing!
+  academicClass: AcademicClass!
+  section: Section!
+  subjectName: String @col(dataType: "varchar(80)")
+  isClassTeacher: Boolean! @default(value: false)
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type TeacherAssignment {
+  teacherId: UUID!
+  branchId: UUID!
+  wingId: UUID!
+  academicClassId: UUID!
+  sectionId: UUID!
+}
+
+type Attendance @table(name: "attendance", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  student: Student!
+  academicClass: AcademicClass!
+  section: Section!
+  attendanceDate: Date!
+  status: String! @col(dataType: "varchar(20)")
+  markedBy: User!
+  editedBy: User
+  remarks: String
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Attendance {
+  studentId: UUID!
+  academicClassId: UUID!
+  sectionId: UUID!
+  markedById: UUID!
+  editedById: UUID
+}
+
+type FeeStructure @table(name: "fee_structures", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  branch: Branch!
+  academicClass: AcademicClass!
+  academicYear: Int!
+  feeName: String! @col(dataType: "varchar(100)")
+  totalAmount: Float!
+  dueDate: Date!
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type FeeStructure {
+  branchId: UUID!
+  academicClassId: UUID!
+}
+
+type StudentFee @table(name: "student_fees", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  student: Student!
+  feeStructure: FeeStructure!
+  totalFee: Float!
+  paidAmount: Float! @default(value: 0)
+  remainingAmount: Float!
+  status: String! @col(dataType: "varchar(20)")
+  dueDate: Date!
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type StudentFee {
+  studentId: UUID!
+  feeStructureId: UUID!
+}
+
+type Payment @table(name: "payments", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  student: Student!
+  studentFee: StudentFee!
+  amount: Float!
+  paymentMode: String! @col(dataType: "varchar(30)")
+  receiptNumber: String @col(dataType: "varchar(80)")
+  uploadedBy: User!
+  remarks: String
+  paidAt: Timestamp! @default(expr: "request.time")
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Payment {
+  studentId: UUID!
+  studentFeeId: UUID!
+  uploadedById: UUID!
+}
+
+type DueTracking @table(name: "due_tracking", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  student: Student!
+  studentFee: StudentFee!
+  dueAmount: Float!
+  dueDate: Date!
+  status: String! @col(dataType: "varchar(20)")
+  lastReminderAt: Timestamp
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type DueTracking {
+  studentId: UUID!
+  studentFeeId: UUID!
+}
+
+type Notification @table(name: "notifications", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  branch: Branch
+  user: User
+  title: String! @col(dataType: "varchar(140)")
+  message: String!
+  audienceRole: String @col(dataType: "varchar(30)")
+  isRead: Boolean! @default(value: false)
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Notification {
+  branchId: UUID
+  userId: UUID
+}
+
+type Suggestion @table(name: "suggestions", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  parent: Parent!
+  student: Student
+  branch: Branch!
+  title: String! @col(dataType: "varchar(140)")
+  message: String!
+  status: String! @col(dataType: "varchar(30)")
+  response: String
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Suggestion {
+  parentId: UUID!
+  studentId: UUID
+  branchId: UUID!
+}

@@ -1,0 +1,199 @@
+query GetCurrentUser($firebaseUID: String!) @auth(level: USER) {
+  users(where: {firebaseUID: {eq: $firebaseUID}, isActive: {eq: true}}, limit: 1) {
+    id
+    firebaseUID
+    fullName
+    countryCode
+    phoneNumber
+    role
+    branchId
+    wingId
+    isActive
+  }
+}
+
+query GetStudentsByBranch($branchId: UUID!, $limit: Int = 50, $offset: Int = 0) @auth(level: USER) {
+  students(
+    where: {branchId: {eq: $branchId}, isActive: {eq: true}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    studentId
+    admissionYear
+    branchCode
+    serialNumber
+    fullName
+    gender
+    dateOfBirth
+    branchId
+    wingId
+    academicClassId
+    sectionId
+    parentId
+    phoneNumber
+    address
+    admissionDate
+    isActive
+  }
+}
+
+query GetStudentsBySection($sectionId: UUID!, $limit: Int = 50, $offset: Int = 0) @auth(level: USER) {
+  students(
+    where: {sectionId: {eq: $sectionId}, isActive: {eq: true}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    studentId
+    fullName
+    academicClassId
+    sectionId
+    parentId
+    phoneNumber
+    admissionDate
+    isActive
+  }
+}
+
+query GetParentChildren($parentId: UUID!) @auth(level: USER) {
+  students(where: {parentId: {eq: $parentId}, isActive: {eq: true}}) {
+    id
+    studentId
+    fullName
+    academicClassId
+    sectionId
+    admissionYear
+    branchCode
+    admissionDate
+  }
+}
+
+query GetAttendanceByMonth($studentId: UUID!, $fromDate: Date!, $toDate: Date!) @auth(level: USER) {
+  attendances(
+    where: {
+      studentId: {eq: $studentId}
+      attendanceDate: {ge: $fromDate, le: $toDate}
+    }
+  ) {
+    id
+    studentId
+    academicClassId
+    sectionId
+    attendanceDate
+    status
+    markedById
+    editedById
+    remarks
+    createdAt
+  }
+}
+
+query GetAttendanceBySection($sectionId: UUID!, $attendanceDate: Date!) @auth(level: USER) {
+  attendances(where: {sectionId: {eq: $sectionId}, attendanceDate: {eq: $attendanceDate}}) {
+    id
+    studentId
+    academicClassId
+    sectionId
+    attendanceDate
+    status
+    markedById
+    editedById
+    remarks
+  }
+}
+
+query GetFeeDetails($studentId: UUID!) @auth(level: USER) {
+  studentFees(where: {studentId: {eq: $studentId}}) {
+    id
+    studentId
+    feeStructureId
+    totalFee
+    paidAmount
+    remainingAmount
+    status
+    dueDate
+    updatedAt
+  }
+  payments(where: {studentId: {eq: $studentId}}) {
+    id
+    studentId
+    studentFeeId
+    amount
+    paymentMode
+    receiptNumber
+    uploadedById
+    remarks
+    paidAt
+  }
+}
+
+query GetDueStudents($branchId: UUID!) @auth(level: USER) {
+  studentFees(where: {remainingAmount: {gt: 0}, student: {branchId: {eq: $branchId}}}) {
+    id
+    studentId
+    totalFee
+    paidAmount
+    remainingAmount
+    status
+    dueDate
+    student {
+      id
+      studentId
+      fullName
+      branchId
+      wingId
+      sectionId
+    }
+  }
+}
+
+query GetPaidStudents($branchId: UUID!) @auth(level: USER) {
+  studentFees(where: {remainingAmount: {eq: 0}, student: {branchId: {eq: $branchId}}}) {
+    id
+    studentId
+    totalFee
+    paidAmount
+    remainingAmount
+    status
+    dueDate
+    student {
+      id
+      studentId
+      fullName
+      branchId
+      wingId
+      sectionId
+    }
+  }
+}
+
+query GetBranchAnalytics($branchId: UUID!) @auth(level: USER) {
+  students(where: {branchId: {eq: $branchId}, isActive: {eq: true}}, limit: 1000) {
+    id
+  }
+  attendances(where: {section: {branchId: {eq: $branchId}}}, limit: 1000) {
+    id
+    status
+  }
+  studentFees(where: {student: {branchId: {eq: $branchId}}}, limit: 1000) {
+    id
+    paidAmount
+    remainingAmount
+  }
+}
+
+query GetClassAnalytics($academicClassId: UUID!) @auth(level: USER) {
+  students(where: {academicClassId: {eq: $academicClassId}, isActive: {eq: true}}, limit: 500) {
+    id
+  }
+  attendances(where: {academicClassId: {eq: $academicClassId}}, limit: 500) {
+    id
+    status
+  }
+  studentFees(where: {student: {academicClassId: {eq: $academicClassId}}}, limit: 500) {
+    id
+    paidAmount
+    remainingAmount
+  }
+}

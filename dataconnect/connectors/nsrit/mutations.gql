@@ -1,0 +1,206 @@
+mutation CreateBranch(
+  $name: String!
+  $branchCode: String!
+  $address: String
+  $city: String
+) @auth(level: USER) {
+  branch_insert(
+    data: {
+      name: $name
+      branchCode: $branchCode
+      address: $address
+      city: $city
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateClass($branchId: UUID!, $wingId: UUID!, $name: String!, $displayOrder: Int) @auth(level: USER) {
+  academicClass_insert(
+    data: {
+      branch: {id: $branchId}
+      wing: {id: $wingId}
+      name: $name
+      displayOrder: $displayOrder
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateSection(
+  $branchId: UUID!
+  $wingId: UUID!
+  $academicClassId: UUID!
+  $name: String!
+) @auth(level: USER) {
+  section_insert(
+    data: {
+      branch: {id: $branchId}
+      wing: {id: $wingId}
+      academicClass: {id: $academicClassId}
+      name: $name
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateParent(
+  $userId: UUID!
+  $branchId: UUID!
+  $fullName: String!
+  $countryCode: String!
+  $phoneNumber: String!
+  $address: String
+) @auth(level: USER) {
+  parent_insert(
+    data: {
+      user: {id: $userId}
+      branch: {id: $branchId}
+      fullName: $fullName
+      countryCode: $countryCode
+      phoneNumber: $phoneNumber
+      address: $address
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateStudent(
+  $studentId: String!
+  $admissionYear: Int!
+  $branchCode: String!
+  $serialNumber: Int!
+  $fullName: String!
+  $gender: String
+  $dateOfBirth: Date
+  $branchId: UUID!
+  $wingId: UUID
+  $academicClassId: UUID!
+  $sectionId: UUID!
+  $parentId: UUID!
+  $countryCode: String
+  $phoneNumber: String
+  $address: String
+  $admissionDate: Date!
+) @auth(level: USER) @transaction {
+  studentIdSequence_upsert(
+    data: {
+      admissionYear: $admissionYear
+      branchCode: $branchCode
+      lastSerialNumber: $serialNumber
+      updatedAt_expr: "request.time"
+    }
+  )
+  student_insert(
+    data: {
+      studentId: $studentId
+      admissionYear: $admissionYear
+      branchCode: $branchCode
+      serialNumber: $serialNumber
+      fullName: $fullName
+      gender: $gender
+      dateOfBirth: $dateOfBirth
+      branch: {id: $branchId}
+      wing: {id: $wingId}
+      academicClass: {id: $academicClassId}
+      section: {id: $sectionId}
+      parent: {id: $parentId}
+      countryCode: $countryCode
+      phoneNumber: $phoneNumber
+      address: $address
+      admissionDate: $admissionDate
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateAttendance(
+  $studentId: UUID!
+  $academicClassId: UUID!
+  $sectionId: UUID!
+  $attendanceDate: Date!
+  $status: String!
+  $markedById: UUID!
+  $remarks: String
+) @auth(level: USER) {
+  attendance_insert(
+    data: {
+      student: {id: $studentId}
+      academicClass: {id: $academicClassId}
+      section: {id: $sectionId}
+      attendanceDate: $attendanceDate
+      status: $status
+      markedBy: {id: $markedById}
+      remarks: $remarks
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation UpdateAttendance(
+  $id: UUID!
+  $status: String!
+  $editedById: UUID!
+  $remarks: String
+) @auth(level: USER) {
+  attendance_update(
+    id: $id
+    data: {
+      status: $status
+      editedBy: {id: $editedById}
+      remarks: $remarks
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation UploadFeePayment(
+  $studentId: UUID!
+  $studentFeeId: UUID!
+  $amount: Float!
+  $paymentMode: String!
+  $receiptNumber: String
+  $uploadedById: UUID!
+  $remarks: String
+) @auth(level: USER) @transaction {
+  payment_insert(
+    data: {
+      student: {id: $studentId}
+      studentFee: {id: $studentFeeId}
+      amount: $amount
+      paymentMode: $paymentMode
+      receiptNumber: $receiptNumber
+      uploadedBy: {id: $uploadedById}
+      remarks: $remarks
+    }
+  )
+}
+
+mutation AssignTeacher(
+  $teacherId: UUID!
+  $branchId: UUID!
+  $wingId: UUID!
+  $academicClassId: UUID!
+  $sectionId: UUID!
+  $subjectName: String
+  $isClassTeacher: Boolean!
+) @auth(level: USER) {
+  teacherAssignment_insert(
+    data: {
+      teacher: {id: $teacherId}
+      branch: {id: $branchId}
+      wing: {id: $wingId}
+      academicClass: {id: $academicClassId}
+      section: {id: $sectionId}
+      subjectName: $subjectName
+      isClassTeacher: $isClassTeacher
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
