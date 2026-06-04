@@ -6,3 +6,6 @@ export {default as attendanceService} from './attendance/attendanceService';
 export {default as feeService} from './fees/feeService';
 export {default as studentService} from './students/studentService';
 export {default as parentService} from './parents/parentService';
+export {default as sectionService} from './sections/sectionService';
+export {default as uploadService} from './uploads/uploadService';
+export {default as mainAdminService} from './mainAdmin/mainAdminService';

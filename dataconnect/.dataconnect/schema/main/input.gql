@@ -1033,6 +1033,30 @@ input Branch_Data {
   """
   id_expr: UUID_Expr @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Branch`.`branchAdminId` of type `UUID`
+  """
+  branchAdminId: UUID
+  """
+  ✨ `_expr` server value variant of `branchAdminId` (✨ Generated from Field `Branch`.`branchAdminId` of type `UUID`)
+  """
+  branchAdminId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`principalId` of type `UUID`
+  """
+  principalId: UUID
+  """
+  ✨ `_expr` server value variant of `principalId` (✨ Generated from Field `Branch`.`principalId` of type `UUID`)
+  """
+  principalId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`branchAdmin` of type `User`
+  """
+  branchAdmin: User_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`principal` of type `User`
+  """
+  principal: User_Key @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Branch`.`address` of type `String`
   """
   address: String
@@ -1073,6 +1097,14 @@ input Branch_Data {
   """
   createdAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Branch`.`email` of type `String`
+  """
+  email: String
+  """
+  ✨ `_expr` server value variant of `email` (✨ Generated from Field `Branch`.`email` of type `String`)
+  """
+  email_expr: String_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Branch`.`isActive` of type `Boolean!`
   """
   isActive: Boolean
@@ -1088,6 +1120,38 @@ input Branch_Data {
   ✨ `_expr` server value variant of `name` (✨ Generated from Field `Branch`.`name` of type `String!`)
   """
   name_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`phone` of type `String`
+  """
+  phone: String
+  """
+  ✨ `_expr` server value variant of `phone` (✨ Generated from Field `Branch`.`phone` of type `String`)
+  """
+  phone_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`pincode` of type `String`
+  """
+  pincode: String
+  """
+  ✨ `_expr` server value variant of `pincode` (✨ Generated from Field `Branch`.`pincode` of type `String`)
+  """
+  pincode_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`state` of type `String`
+  """
+  state: String
+  """
+  ✨ `_expr` server value variant of `state` (✨ Generated from Field `Branch`.`state` of type `String`)
+  """
+  state_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Branch`.`status` of type `String!`
+  """
+  status: String
+  """
+  ✨ `_expr` server value variant of `status` (✨ Generated from Field `Branch`.`status` of type `String!`)
+  """
+  status_expr: String_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Branch`.`updatedAt` of type `Timestamp!`
   """
@@ -1166,6 +1230,22 @@ input Branch_Filter {
   """
   id: UUID_Filter
   """
+  ✨ Generated from Field `Branch`.`branchAdminId` of type `UUID`
+  """
+  branchAdminId: UUID_Filter
+  """
+  ✨ Generated from Field `Branch`.`principalId` of type `UUID`
+  """
+  principalId: UUID_Filter
+  """
+  ✨ Generated from Field `Branch`.`branchAdmin` of type `User`
+  """
+  branchAdmin: User_Filter
+  """
+  ✨ Generated from Field `Branch`.`principal` of type `User`
+  """
+  principal: User_Filter
+  """
   ✨ Generated from Field `Branch`.`address` of type `String`
   """
   address: String_Filter
@@ -1182,6 +1262,10 @@ input Branch_Filter {
   """
   createdAt: Timestamp_Filter
   """
+  ✨ Generated from Field `Branch`.`email` of type `String`
+  """
+  email: String_Filter
+  """
   ✨ Generated from Field `Branch`.`isActive` of type `Boolean!`
   """
   isActive: Boolean_Filter
@@ -1189,6 +1273,22 @@ input Branch_Filter {
   ✨ Generated from Field `Branch`.`name` of type `String!`
   """
   name: String_Filter
+  """
+  ✨ Generated from Field `Branch`.`phone` of type `String`
+  """
+  phone: String_Filter
+  """
+  ✨ Generated from Field `Branch`.`pincode` of type `String`
+  """
+  pincode: String_Filter
+  """
+  ✨ Generated from Field `Branch`.`state` of type `String`
+  """
+  state: String_Filter
+  """
+  ✨ Generated from Field `Branch`.`status` of type `String!`
+  """
+  status: String_Filter
   """
   ✨ Generated from Field `Branch`.`updatedAt` of type `Timestamp!`
   """
@@ -1276,6 +1376,10 @@ input Branch_Having {
   """
   address_count: Int_Filter
   """
+  ✨ Generated from Field `Branch`.`branchAdminId_count` of type `Int!`
+  """
+  branchAdminId_count: Int_Filter
+  """
   ✨ Generated from Field `Branch`.`branchCode_count` of type `Int!`
   """
   branchCode_count: Int_Filter
@@ -1288,6 +1392,10 @@ input Branch_Having {
   """
   createdAt_count: Int_Filter
   """
+  ✨ Generated from Field `Branch`.`email_count` of type `Int!`
+  """
+  email_count: Int_Filter
+  """
   ✨ Generated from Field `Branch`.`id_count` of type `Int!`
   """
   id_count: Int_Filter
@@ -1299,6 +1407,26 @@ input Branch_Having {
   ✨ Generated from Field `Branch`.`name_count` of type `Int!`
   """
   name_count: Int_Filter
+  """
+  ✨ Generated from Field `Branch`.`phone_count` of type `Int!`
+  """
+  phone_count: Int_Filter
+  """
+  ✨ Generated from Field `Branch`.`pincode_count` of type `Int!`
+  """
+  pincode_count: Int_Filter
+  """
+  ✨ Generated from Field `Branch`.`principalId_count` of type `Int!`
+  """
+  principalId_count: Int_Filter
+  """
+  ✨ Generated from Field `Branch`.`state_count` of type `Int!`
+  """
+  state_count: Int_Filter
+  """
+  ✨ Generated from Field `Branch`.`status_count` of type `Int!`
+  """
+  status_count: Int_Filter
   """
   ✨ Generated from Field `Branch`.`updatedAt_count` of type `Int!`
   """
@@ -1355,6 +1483,22 @@ input Branch_Order {
   """
   id: OrderDirection
   """
+  ✨ Generated from Field `Branch`.`branchAdminId` of type `UUID`
+  """
+  branchAdminId: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`principalId` of type `UUID`
+  """
+  principalId: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`branchAdmin` of type `User`
+  """
+  branchAdmin: User_Order
+  """
+  ✨ Generated from Field `Branch`.`principal` of type `User`
+  """
+  principal: User_Order
+  """
   ✨ Generated from Field `Branch`.`address` of type `String`
   """
   address: OrderDirection
@@ -1371,6 +1515,10 @@ input Branch_Order {
   """
   createdAt: OrderDirection
   """
+  ✨ Generated from Field `Branch`.`email` of type `String`
+  """
+  email: OrderDirection
+  """
   ✨ Generated from Field `Branch`.`isActive` of type `Boolean!`
   """
   isActive: OrderDirection
@@ -1378,6 +1526,22 @@ input Branch_Order {
   ✨ Generated from Field `Branch`.`name` of type `String!`
   """
   name: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`phone` of type `String`
+  """
+  phone: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`pincode` of type `String`
+  """
+  pincode: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`state` of type `String`
+  """
+  state: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`status` of type `String!`
+  """
+  status: OrderDirection
   """
   ✨ Generated from Field `Branch`.`updatedAt` of type `Timestamp!`
   """
@@ -1391,6 +1555,10 @@ input Branch_Order {
   """
   address_count: OrderDirection
   """
+  ✨ Generated from Field `Branch`.`branchAdminId_count` of type `Int!`
+  """
+  branchAdminId_count: OrderDirection
+  """
   ✨ Generated from Field `Branch`.`branchCode_count` of type `Int!`
   """
   branchCode_count: OrderDirection
@@ -1403,6 +1571,10 @@ input Branch_Order {
   """
   createdAt_count: OrderDirection
   """
+  ✨ Generated from Field `Branch`.`email_count` of type `Int!`
+  """
+  email_count: OrderDirection
+  """
   ✨ Generated from Field `Branch`.`id_count` of type `Int!`
   """
   id_count: OrderDirection
@@ -1414,6 +1586,26 @@ input Branch_Order {
   ✨ Generated from Field `Branch`.`name_count` of type `Int!`
   """
   name_count: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`phone_count` of type `Int!`
+  """
+  phone_count: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`pincode_count` of type `Int!`
+  """
+  pincode_count: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`principalId_count` of type `Int!`
+  """
+  principalId_count: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`state_count` of type `Int!`
+  """
+  state_count: OrderDirection
+  """
+  ✨ Generated from Field `Branch`.`status_count` of type `Int!`
+  """
+  status_count: OrderDirection
   """
   ✨ Generated from Field `Branch`.`updatedAt_count` of type `Int!`
   """
@@ -2769,11 +2961,11 @@ input Parent_Data {
   """
   branchId_expr: UUID_Expr @fdc_forbiddenInVariables
   """
-  ✨ Generated from Field `Parent`.`userId` of type `UUID!`
+  ✨ Generated from Field `Parent`.`userId` of type `UUID`
   """
   userId: UUID
   """
-  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `Parent`.`userId` of type `UUID!`)
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `Parent`.`userId` of type `UUID`)
   """
   userId_expr: UUID_Expr @fdc_forbiddenInVariables
   """
@@ -2781,7 +2973,7 @@ input Parent_Data {
   """
   branch: Branch_Key @fdc_forbiddenInVariables
   """
-  ✨ Generated from Field `Parent`.`user` of type `User!`
+  ✨ Generated from Field `Parent`.`user` of type `User`
   """
   user: User_Key @fdc_forbiddenInVariables
   """
@@ -2817,6 +3009,22 @@ input Parent_Data {
   """
   createdAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Parent`.`email` of type `String`
+  """
+  email: String
+  """
+  ✨ `_expr` server value variant of `email` (✨ Generated from Field `Parent`.`email` of type `String`)
+  """
+  email_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Parent`.`fatherName` of type `String`
+  """
+  fatherName: String
+  """
+  ✨ `_expr` server value variant of `fatherName` (✨ Generated from Field `Parent`.`fatherName` of type `String`)
+  """
+  fatherName_expr: String_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Parent`.`fullName` of type `String!`
   """
   fullName: String
@@ -2832,6 +3040,14 @@ input Parent_Data {
   ✨ `_expr` server value variant of `isActive` (✨ Generated from Field `Parent`.`isActive` of type `Boolean!`)
   """
   isActive_expr: Boolean_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Parent`.`motherName` of type `String`
+  """
+  motherName: String
+  """
+  ✨ `_expr` server value variant of `motherName` (✨ Generated from Field `Parent`.`motherName` of type `String`)
+  """
+  motherName_expr: String_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Parent`.`phoneNumber` of type `String!`
   """
@@ -2890,7 +3106,7 @@ input Parent_Filter {
   """
   branchId: UUID_Filter
   """
-  ✨ Generated from Field `Parent`.`userId` of type `UUID!`
+  ✨ Generated from Field `Parent`.`userId` of type `UUID`
   """
   userId: UUID_Filter
   """
@@ -2898,7 +3114,7 @@ input Parent_Filter {
   """
   branch: Branch_Filter
   """
-  ✨ Generated from Field `Parent`.`user` of type `User!`
+  ✨ Generated from Field `Parent`.`user` of type `User`
   """
   user: User_Filter
   """
@@ -2914,6 +3130,14 @@ input Parent_Filter {
   """
   createdAt: Timestamp_Filter
   """
+  ✨ Generated from Field `Parent`.`email` of type `String`
+  """
+  email: String_Filter
+  """
+  ✨ Generated from Field `Parent`.`fatherName` of type `String`
+  """
+  fatherName: String_Filter
+  """
   ✨ Generated from Field `Parent`.`fullName` of type `String!`
   """
   fullName: String_Filter
@@ -2921,6 +3145,10 @@ input Parent_Filter {
   ✨ Generated from Field `Parent`.`isActive` of type `Boolean!`
   """
   isActive: Boolean_Filter
+  """
+  ✨ Generated from Field `Parent`.`motherName` of type `String`
+  """
+  motherName: String_Filter
   """
   ✨ Generated from Field `Parent`.`phoneNumber` of type `String!`
   """
@@ -2992,6 +3220,14 @@ input Parent_Having {
   """
   createdAt_count: Int_Filter
   """
+  ✨ Generated from Field `Parent`.`email_count` of type `Int!`
+  """
+  email_count: Int_Filter
+  """
+  ✨ Generated from Field `Parent`.`fatherName_count` of type `Int!`
+  """
+  fatherName_count: Int_Filter
+  """
   ✨ Generated from Field `Parent`.`fullName_count` of type `Int!`
   """
   fullName_count: Int_Filter
@@ -3003,6 +3239,10 @@ input Parent_Having {
   ✨ Generated from Field `Parent`.`isActive_count` of type `Int!`
   """
   isActive_count: Int_Filter
+  """
+  ✨ Generated from Field `Parent`.`motherName_count` of type `Int!`
+  """
+  motherName_count: Int_Filter
   """
   ✨ Generated from Field `Parent`.`phoneNumber_count` of type `Int!`
   """
@@ -3071,7 +3311,7 @@ input Parent_Order {
   """
   branchId: OrderDirection
   """
-  ✨ Generated from Field `Parent`.`userId` of type `UUID!`
+  ✨ Generated from Field `Parent`.`userId` of type `UUID`
   """
   userId: OrderDirection
   """
@@ -3079,7 +3319,7 @@ input Parent_Order {
   """
   branch: Branch_Order
   """
-  ✨ Generated from Field `Parent`.`user` of type `User!`
+  ✨ Generated from Field `Parent`.`user` of type `User`
   """
   user: User_Order
   """
@@ -3095,6 +3335,14 @@ input Parent_Order {
   """
   createdAt: OrderDirection
   """
+  ✨ Generated from Field `Parent`.`email` of type `String`
+  """
+  email: OrderDirection
+  """
+  ✨ Generated from Field `Parent`.`fatherName` of type `String`
+  """
+  fatherName: OrderDirection
+  """
   ✨ Generated from Field `Parent`.`fullName` of type `String!`
   """
   fullName: OrderDirection
@@ -3102,6 +3350,10 @@ input Parent_Order {
   ✨ Generated from Field `Parent`.`isActive` of type `Boolean!`
   """
   isActive: OrderDirection
+  """
+  ✨ Generated from Field `Parent`.`motherName` of type `String`
+  """
+  motherName: OrderDirection
   """
   ✨ Generated from Field `Parent`.`phoneNumber` of type `String!`
   """
@@ -3131,6 +3383,14 @@ input Parent_Order {
   """
   createdAt_count: OrderDirection
   """
+  ✨ Generated from Field `Parent`.`email_count` of type `Int!`
+  """
+  email_count: OrderDirection
+  """
+  ✨ Generated from Field `Parent`.`fatherName_count` of type `Int!`
+  """
+  fatherName_count: OrderDirection
+  """
   ✨ Generated from Field `Parent`.`fullName_count` of type `Int!`
   """
   fullName_count: OrderDirection
@@ -3142,6 +3402,10 @@ input Parent_Order {
   ✨ Generated from Field `Parent`.`isActive_count` of type `Int!`
   """
   isActive_count: OrderDirection
+  """
+  ✨ Generated from Field `Parent`.`motherName_count` of type `Int!`
+  """
+  motherName_count: OrderDirection
   """
   ✨ Generated from Field `Parent`.`phoneNumber_count` of type `Int!`
   """
@@ -4094,6 +4358,14 @@ input Student_Data {
   """
   wing: Wing_Key @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Student`.`aadhaarDocumentUrl` of type `String`
+  """
+  aadhaarDocumentUrl: String
+  """
+  ✨ `_expr` server value variant of `aadhaarDocumentUrl` (✨ Generated from Field `Student`.`aadhaarDocumentUrl` of type `String`)
+  """
+  aadhaarDocumentUrl_expr: String_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Student`.`address` of type `String`
   """
   address: String
@@ -4129,6 +4401,22 @@ input Student_Data {
   ✨ `_update` server value variant of `admissionYear` (✨ Generated from Field `Student`.`admissionYear` of type `Int!`)
   """
   admissionYear_update: [Int_Update!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Student`.`birthCertificateUrl` of type `String`
+  """
+  birthCertificateUrl: String
+  """
+  ✨ `_expr` server value variant of `birthCertificateUrl` (✨ Generated from Field `Student`.`birthCertificateUrl` of type `String`)
+  """
+  birthCertificateUrl_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Student`.`bloodGroup` of type `String`
+  """
+  bloodGroup: String
+  """
+  ✨ `_expr` server value variant of `bloodGroup` (✨ Generated from Field `Student`.`bloodGroup` of type `String`)
+  """
+  bloodGroup_expr: String_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Student`.`branchCode` of type `String!`
   """
@@ -4210,6 +4498,22 @@ input Student_Data {
   """
   phoneNumber_expr: String_Expr @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Student`.`photoUrl` of type `String`
+  """
+  photoUrl: String
+  """
+  ✨ `_expr` server value variant of `photoUrl` (✨ Generated from Field `Student`.`photoUrl` of type `String`)
+  """
+  photoUrl_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Student`.`rollNumber` of type `String`
+  """
+  rollNumber: String
+  """
+  ✨ `_expr` server value variant of `rollNumber` (✨ Generated from Field `Student`.`rollNumber` of type `String`)
+  """
+  rollNumber_expr: String_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Student`.`serialNumber` of type `Int!`
   """
   serialNumber: Int
@@ -4229,6 +4533,14 @@ input Student_Data {
   ✨ `_expr` server value variant of `studentId` (✨ Generated from Field `Student`.`studentId` of type `String!`)
   """
   studentId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Student`.`transferCertificateUrl` of type `String`
+  """
+  transferCertificateUrl: String
+  """
+  ✨ `_expr` server value variant of `transferCertificateUrl` (✨ Generated from Field `Student`.`transferCertificateUrl` of type `String`)
+  """
+  transferCertificateUrl_expr: String_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Student`.`updatedAt` of type `Timestamp!`
   """
@@ -4327,6 +4639,10 @@ input Student_Filter {
   """
   wing: Wing_Filter
   """
+  ✨ Generated from Field `Student`.`aadhaarDocumentUrl` of type `String`
+  """
+  aadhaarDocumentUrl: String_Filter
+  """
   ✨ Generated from Field `Student`.`address` of type `String`
   """
   address: String_Filter
@@ -4338,6 +4654,14 @@ input Student_Filter {
   ✨ Generated from Field `Student`.`admissionYear` of type `Int!`
   """
   admissionYear: Int_Filter
+  """
+  ✨ Generated from Field `Student`.`birthCertificateUrl` of type `String`
+  """
+  birthCertificateUrl: String_Filter
+  """
+  ✨ Generated from Field `Student`.`bloodGroup` of type `String`
+  """
+  bloodGroup: String_Filter
   """
   ✨ Generated from Field `Student`.`branchCode` of type `String!`
   """
@@ -4371,6 +4695,14 @@ input Student_Filter {
   """
   phoneNumber: String_Filter
   """
+  ✨ Generated from Field `Student`.`photoUrl` of type `String`
+  """
+  photoUrl: String_Filter
+  """
+  ✨ Generated from Field `Student`.`rollNumber` of type `String`
+  """
+  rollNumber: String_Filter
+  """
   ✨ Generated from Field `Student`.`serialNumber` of type `Int!`
   """
   serialNumber: Int_Filter
@@ -4378,6 +4710,10 @@ input Student_Filter {
   ✨ Generated from Field `Student`.`studentId` of type `String!`
   """
   studentId: String_Filter
+  """
+  ✨ Generated from Field `Student`.`transferCertificateUrl` of type `String`
+  """
+  transferCertificateUrl: String_Filter
   """
   ✨ Generated from Field `Student`.`updatedAt` of type `Timestamp!`
   """
@@ -4441,6 +4777,10 @@ input Student_Having {
   """
   _count: Int_Filter
   """
+  ✨ Generated from Field `Student`.`aadhaarDocumentUrl_count` of type `Int!`
+  """
+  aadhaarDocumentUrl_count: Int_Filter
+  """
   ✨ Generated from Field `Student`.`academicClassId_count` of type `Int!`
   """
   academicClassId_count: Int_Filter
@@ -4456,6 +4796,14 @@ input Student_Having {
   ✨ Generated from Field `Student`.`admissionYear_count` of type `Int!`
   """
   admissionYear_count: Int_Filter
+  """
+  ✨ Generated from Field `Student`.`birthCertificateUrl_count` of type `Int!`
+  """
+  birthCertificateUrl_count: Int_Filter
+  """
+  ✨ Generated from Field `Student`.`bloodGroup_count` of type `Int!`
+  """
+  bloodGroup_count: Int_Filter
   """
   ✨ Generated from Field `Student`.`branchCode_count` of type `Int!`
   """
@@ -4501,6 +4849,14 @@ input Student_Having {
   """
   phoneNumber_count: Int_Filter
   """
+  ✨ Generated from Field `Student`.`photoUrl_count` of type `Int!`
+  """
+  photoUrl_count: Int_Filter
+  """
+  ✨ Generated from Field `Student`.`rollNumber_count` of type `Int!`
+  """
+  rollNumber_count: Int_Filter
+  """
   ✨ Generated from Field `Student`.`sectionId_count` of type `Int!`
   """
   sectionId_count: Int_Filter
@@ -4512,6 +4868,10 @@ input Student_Having {
   ✨ Generated from Field `Student`.`studentId_count` of type `Int!`
   """
   studentId_count: Int_Filter
+  """
+  ✨ Generated from Field `Student`.`transferCertificateUrl_count` of type `Int!`
+  """
+  transferCertificateUrl_count: Int_Filter
   """
   ✨ Generated from Field `Student`.`updatedAt_count` of type `Int!`
   """
@@ -4660,6 +5020,10 @@ input Student_Order {
   """
   wing: Wing_Order
   """
+  ✨ Generated from Field `Student`.`aadhaarDocumentUrl` of type `String`
+  """
+  aadhaarDocumentUrl: OrderDirection
+  """
   ✨ Generated from Field `Student`.`address` of type `String`
   """
   address: OrderDirection
@@ -4671,6 +5035,14 @@ input Student_Order {
   ✨ Generated from Field `Student`.`admissionYear` of type `Int!`
   """
   admissionYear: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`birthCertificateUrl` of type `String`
+  """
+  birthCertificateUrl: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`bloodGroup` of type `String`
+  """
+  bloodGroup: OrderDirection
   """
   ✨ Generated from Field `Student`.`branchCode` of type `String!`
   """
@@ -4704,6 +5076,14 @@ input Student_Order {
   """
   phoneNumber: OrderDirection
   """
+  ✨ Generated from Field `Student`.`photoUrl` of type `String`
+  """
+  photoUrl: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`rollNumber` of type `String`
+  """
+  rollNumber: OrderDirection
+  """
   ✨ Generated from Field `Student`.`serialNumber` of type `Int!`
   """
   serialNumber: OrderDirection
@@ -4712,6 +5092,10 @@ input Student_Order {
   """
   studentId: OrderDirection
   """
+  ✨ Generated from Field `Student`.`transferCertificateUrl` of type `String`
+  """
+  transferCertificateUrl: OrderDirection
+  """
   ✨ Generated from Field `Student`.`updatedAt` of type `Timestamp!`
   """
   updatedAt: OrderDirection
@@ -4719,6 +5103,10 @@ input Student_Order {
   ✨ Generated from Field `Student`.`_count` of type `Int!`
   """
   _count: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`aadhaarDocumentUrl_count` of type `Int!`
+  """
+  aadhaarDocumentUrl_count: OrderDirection
   """
   ✨ Generated from Field `Student`.`academicClassId_count` of type `Int!`
   """
@@ -4735,6 +5123,14 @@ input Student_Order {
   ✨ Generated from Field `Student`.`admissionYear_count` of type `Int!`
   """
   admissionYear_count: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`birthCertificateUrl_count` of type `Int!`
+  """
+  birthCertificateUrl_count: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`bloodGroup_count` of type `Int!`
+  """
+  bloodGroup_count: OrderDirection
   """
   ✨ Generated from Field `Student`.`branchCode_count` of type `Int!`
   """
@@ -4780,6 +5176,14 @@ input Student_Order {
   """
   phoneNumber_count: OrderDirection
   """
+  ✨ Generated from Field `Student`.`photoUrl_count` of type `Int!`
+  """
+  photoUrl_count: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`rollNumber_count` of type `Int!`
+  """
+  rollNumber_count: OrderDirection
+  """
   ✨ Generated from Field `Student`.`sectionId_count` of type `Int!`
   """
   sectionId_count: OrderDirection
@@ -4791,6 +5195,10 @@ input Student_Order {
   ✨ Generated from Field `Student`.`studentId_count` of type `Int!`
   """
   studentId_count: OrderDirection
+  """
+  ✨ Generated from Field `Student`.`transferCertificateUrl_count` of type `Int!`
+  """
+  transferCertificateUrl_count: OrderDirection
   """
   ✨ Generated from Field `Student`.`updatedAt_count` of type `Int!`
   """
@@ -6725,6 +7133,14 @@ input User_Data {
   """
   attendances_on_markedBy: [Attendance_Data!]
   """
+  ✨ Generated from Field `User`.`branches_on_branchAdmin` of type `[Branch!]!`
+  """
+  branches_on_branchAdmin: [Branch_Data!]
+  """
+  ✨ Generated from Field `User`.`branches_on_principal` of type `[Branch!]!`
+  """
+  branches_on_principal: [Branch_Data!]
+  """
   ✨ Generated from Field `User`.`notifications_on_user` of type `[Notification!]!`
   """
   notifications_on_user: [Notification_Data!]
@@ -6817,6 +7233,14 @@ input User_Filter {
   ✨ Generated from Field `User`.`attendances_on_markedBy` of type `[Attendance!]!`
   """
   attendances_on_markedBy: Attendance_ListFilter
+  """
+  ✨ Generated from Field `User`.`branches_on_branchAdmin` of type `[Branch!]!`
+  """
+  branches_on_branchAdmin: Branch_ListFilter
+  """
+  ✨ Generated from Field `User`.`branches_on_principal` of type `[Branch!]!`
+  """
+  branches_on_principal: Branch_ListFilter
   """
   ✨ Generated from Field `User`.`notifications_on_user` of type `[Notification!]!`
   """

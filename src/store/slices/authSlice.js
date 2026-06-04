@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import authService from '../../services/auth/authService';
+import {unwrapResponse} from '../../utils/firebaseResponse';
 
 export const bootstrapAuth = createAsyncThunk('auth/bootstrap', async () => {
   return authService.getStoredSession();
@@ -9,7 +10,7 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials, {rejectWithValue}) => {
     try {
-      return await authService.login(credentials);
+      return unwrapResponse(await authService.sendOtp(credentials));
     } catch (error) {
       return rejectWithValue(error.message || 'Unable to login');
     }
@@ -20,7 +21,7 @@ export const sendOtp = createAsyncThunk(
   'auth/sendOtp',
   async (payload, {rejectWithValue}) => {
     try {
-      return await authService.sendOtp(payload);
+      return unwrapResponse(await authService.sendOtp(payload));
     } catch (error) {
       return rejectWithValue(error.message || 'Unable to send OTP');
     }
@@ -31,7 +32,7 @@ export const verifyOtp = createAsyncThunk(
   'auth/verifyOtp',
   async (payload, {rejectWithValue}) => {
     try {
-      return await authService.verifyOtp(payload);
+      return unwrapResponse(await authService.verifyOtp(payload));
     } catch (error) {
       return rejectWithValue(error.message || 'Unable to verify OTP');
     }

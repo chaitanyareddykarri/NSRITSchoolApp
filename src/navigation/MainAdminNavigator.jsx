@@ -1,10 +1,17 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DashboardScreen from '../screens/mainAdmin/DashboardScreen';
+import BranchDetailsScreen from '../screens/mainAdmin/BranchDetailsScreen';
+import BranchListScreen from '../screens/mainAdmin/BranchListScreen';
+import ClassDetailsScreen from '../screens/mainAdmin/ClassDetailsScreen';
 import CreateBranchScreen from '../screens/mainAdmin/CreateBranchScreen';
-import ManageBranchesScreen from '../screens/mainAdmin/ManageBranchesScreen';
+import EditBranchScreen from '../screens/mainAdmin/EditBranchScreen';
+import GlobalAnalyticsScreen from '../screens/mainAdmin/GlobalAnalyticsScreen';
+import GlobalClassesScreen from '../screens/mainAdmin/GlobalClassesScreen';
+import GlobalStudentsScreen from '../screens/mainAdmin/GlobalStudentsScreen';
 import ManageUsersScreen from '../screens/mainAdmin/ManageUsersScreen';
 import SettingsScreen from '../screens/mainAdmin/SettingsScreen';
+import StudentProfileScreen from '../screens/mainAdmin/StudentProfileScreen';
 import {renderFeeStackScreens} from './FeeStackScreens';
 
 const Stack = createNativeStackNavigator();
@@ -17,13 +24,53 @@ const MainAdminNavigator = () => (
       options={{title: 'Main Admin'}}
     />
     <Stack.Screen
+      name="BranchList"
+      component={BranchListScreen}
+      options={{title: 'Branches'}}
+    />
+    <Stack.Screen
+      name="BranchDetails"
+      component={BranchDetailsScreen}
+      options={{title: 'Branch Details'}}
+    />
+    <Stack.Screen
+      name="EditBranch"
+      component={EditBranchScreen}
+      options={{title: 'Edit Branch'}}
+    />
+    <Stack.Screen
+      name="GlobalClasses"
+      component={GlobalClassesScreen}
+      options={{title: 'Global Classes'}}
+    />
+    <Stack.Screen
+      name="ClassDetails"
+      component={ClassDetailsScreen}
+      options={{title: 'Class Details'}}
+    />
+    <Stack.Screen
+      name="GlobalStudents"
+      component={GlobalStudentsScreen}
+      options={{title: 'Global Students'}}
+    />
+    <Stack.Screen
+      name="StudentProfile"
+      component={StudentProfileScreen}
+      options={{title: 'Student Profile'}}
+    />
+    <Stack.Screen
+      name="GlobalAnalytics"
+      component={GlobalAnalyticsScreen}
+      options={{title: 'Reports'}}
+    />
+    <Stack.Screen
       name="CreateBranch"
       component={CreateBranchScreen}
       options={{title: 'Create Branch'}}
     />
     <Stack.Screen
       name="ManageBranches"
-      component={ManageBranchesScreen}
+      component={BranchListScreen}
       options={{title: 'Branches'}}
     />
     <Stack.Screen

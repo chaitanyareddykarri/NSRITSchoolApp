@@ -1,61 +1,30 @@
-import {
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  serverTimestamp,
-  where,
-} from 'firebase/firestore';
-import {COLLECTIONS} from '../../config/constants';
-import {firestore, isFirebaseConfigured} from '../../config/firebase';
-
-const demoAssignments = [
-  {
-    id: 'assignment-1',
-    teacherId: 'demo-teacher',
-    teacherName: 'Demo Teacher',
-    classId: 'class-1',
-    sectionId: 'section-a',
-    wing: 'Primary',
-  },
-];
+import {USER_ROLES} from '../../config/constants';
+import dataConnectClient from '../dataconnect/dataConnectClient';
+import {DATA_CONNECT_MUTATIONS, DATA_CONNECT_QUERIES} from '../dataconnect/operations';
 
 export const teacherService = {
   async getAssignments(filters = {}) {
-    if (!isFirebaseConfigured) {
-      return demoAssignments.filter(
-        item => !filters.teacherId || item.teacherId === filters.teacherId,
-      );
+    if (!filters.teacherId) {
+      return [];
     }
 
-    const constraints = Object.entries(filters)
-      .filter(([, value]) => Boolean(value))
-      .map(([key, value]) => where(key, '==', value));
-
-    const snapshot = await getDocs(
-      query(
-        collection(firestore, COLLECTIONS.TEACHER_ASSIGNMENTS),
-        ...constraints,
-      ),
-    );
-
-    return snapshot.docs.map(item => ({id: item.id, ...item.data()}));
+    const response = await dataConnectClient.query(DATA_CONNECT_QUERIES.GET_TEACHER_ASSIGNMENTS, {
+      teacherId: filters.teacherId,
+    });
+    return response.teacherAssignments || [];
   },
 
-  async assignTeacher(payload) {
-    if (!isFirebaseConfigured) {
-      return {id: `assignment-${Date.now()}`, ...payload};
+  async assignTeacher(payload, scope) {
+    if (scope?.role === USER_ROLES.COORDINATOR && payload.wingId !== scope.wingId) {
+      throw new Error('Coordinators can assign teachers only inside their assigned wing.');
     }
 
-    const docRef = await addDoc(
-      collection(firestore, COLLECTIONS.TEACHER_ASSIGNMENTS),
-      {
-        ...payload,
-        createdAt: serverTimestamp(),
-      },
-    );
+    const response = await dataConnectClient.mutate(DATA_CONNECT_MUTATIONS.ASSIGN_TEACHER, {
+      ...payload,
+      isClassTeacher: Boolean(payload.isClassTeacher),
+    });
 
-    return {id: docRef.id, ...payload};
+    return {id: response.teacherAssignment_insert, ...payload, isActive: true};
   },
 };
 

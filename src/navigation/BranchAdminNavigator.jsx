@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DashboardScreen from '../screens/branchAdmin/DashboardScreen';
 import ManageTeachersScreen from '../screens/branchAdmin/ManageTeachersScreen';
 import ManageStudentsScreen from '../screens/branchAdmin/ManageStudentsScreen';
+import CreateStudentScreen from '../screens/branchAdmin/CreateStudentScreen';
+import BulkStudentUploadScreen from '../screens/branchAdmin/BulkStudentUploadScreen';
 import AttendanceOverviewScreen from '../screens/branchAdmin/AttendanceOverviewScreen';
 import BranchSettingsScreen from '../screens/branchAdmin/BranchSettingsScreen';
 import {renderFeeStackScreens} from './FeeStackScreens';
@@ -25,6 +27,16 @@ const BranchAdminNavigator = () => (
       name="ManageStudents"
       component={ManageStudentsScreen}
       options={{title: 'Students'}}
+    />
+    <Stack.Screen
+      name="CreateStudent"
+      component={CreateStudentScreen}
+      options={{title: 'Create Student'}}
+    />
+    <Stack.Screen
+      name="BulkStudentUpload"
+      component={BulkStudentUploadScreen}
+      options={{title: 'Bulk Upload'}}
     />
     <Stack.Screen
       name="AttendanceOverview"

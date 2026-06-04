@@ -1,62 +1,41 @@
-import auth from '@react-native-firebase/auth';
-import {DEMO_ROLE_PHONE_SUFFIX, STORAGE_KEYS, USER_ROLES} from '../../config/constants';
+import {
+  getAuth,
+  signInWithPhoneNumber,
+  signInWithCredential,
+  signOut,
+  PhoneAuthProvider,
+  getIdToken,
+} from '@react-native-firebase/auth';
+import {STORAGE_KEYS} from '../../config/constants';
+import {authConfig} from '../../config/env';
 import dataConnectClient from '../dataconnect/dataConnectClient';
-import {DATA_CONNECT_QUERIES} from '../dataconnect/operations';
+import {DATA_CONNECT_MUTATIONS, DATA_CONNECT_QUERIES} from '../dataconnect/operations';
 import {getJSON, removeStorageKeys, setJSON, storage} from '../storage/mmkvStorage';
+import {errorResponse, successResponse} from '../../utils/firebaseResponse';
+import {formatE164PhoneNumber} from '../../utils/phone';
+import {USER_ROLES} from '../../config/constants';
+import parentService from '../parents/parentService';
 
 const buildFullPhoneNumber = ({countryCode = '+91', phoneNumber}) => {
-  const code = String(countryCode).startsWith('+') ? countryCode : `+${countryCode}`;
-  const digits = String(phoneNumber || '').replace(/\D/g, '');
-
-  return `${code}${digits}`;
-};
-
-const getDemoRoleFromPhone = phoneNumber => {
-  const digits = String(phoneNumber || '').replace(/\D/g, '');
-  const suffix = digits.slice(-4);
-  return DEMO_ROLE_PHONE_SUFFIX[suffix] || USER_ROLES.PARENT;
-};
-
-const isDemoPhoneNumber = phoneNumber => {
-  const digits = String(phoneNumber || '').replace(/\D/g, '');
-  return Boolean(DEMO_ROLE_PHONE_SUFFIX[digits.slice(-4)]);
-};
-
-const buildDemoUser = ({countryCode, phoneNumber, firebaseUID}) => {
-  const role = getDemoRoleFromPhone(phoneNumber);
-
-  return {
-    id: `demo-${role.toLowerCase()}`,
-    uid: firebaseUID || `demo-${role.toLowerCase()}`,
-    firebaseUID: firebaseUID || `demo-${role.toLowerCase()}`,
-    fullName: role
-      .split('_')
-      .map(value => value.charAt(0) + value.slice(1).toLowerCase())
-      .join(' '),
-    name: role,
-    countryCode,
-    phoneNumber,
-    role,
-    branchId: role === USER_ROLES.MAIN_ADMIN ? null : 'demo-branch',
-    wingId: role === USER_ROLES.COORDINATOR ? 'demo-wing' : null,
-    isActive: true,
-  };
+  return formatE164PhoneNumber({countryCode, phoneNumber});
 };
 
 const normalizeProfile = (profile, fallback = {}) => {
   const user = profile || {};
 
   return {
-    id: user.id || fallback.firebaseUID,
-    uid: user.firebaseUID || fallback.firebaseUID,
-    firebaseUID: user.firebaseUID || fallback.firebaseUID,
-    fullName: user.fullName || fallback.fullName || 'NSRIT User',
-    name: user.fullName || fallback.fullName || 'NSRIT User',
+    id: user.id,
+    uid: user.firebaseUID,
+    firebaseUID: user.firebaseUID,
+    fullName: user.fullName,
+    name: user.fullName,
     countryCode: user.countryCode || fallback.countryCode,
     phoneNumber: user.phoneNumber || fallback.phoneNumber,
-    role: user.role || fallback.role || USER_ROLES.PARENT,
-    branchId: user.branchId || fallback.branchId || null,
-    wingId: user.wingId || fallback.wingId || null,
+    role: user.role,
+    branchId: user.branchId || null,
+    wingId: user.wingId || null,
+    sectionId: user.sectionId || null,
+    parentId: user.parentId || fallback.parentId || null,
     isActive: user.isActive ?? true,
   };
 };
@@ -69,69 +48,116 @@ const fetchUserProfile = async firebaseUID => {
   return response.users?.[0] || null;
 };
 
+const fetchUserProfileByPhone = async phoneNumber => {
+  const response = await dataConnectClient.query(DATA_CONNECT_QUERIES.GET_USER_BY_PHONE, {
+    phoneNumber,
+  });
+
+  return response.users?.[0] || null;
+};
+
+const claimUserProfile = async id => {
+  await dataConnectClient.mutate(DATA_CONNECT_MUTATIONS.CLAIM_USER_FIREBASE_UID, {
+    id,
+  });
+};
+
+const hydrateRoleProfile = async profile => {
+  if (!profile) {
+    return null;
+  }
+
+  if (profile.role !== USER_ROLES.PARENT) {
+    return profile;
+  }
+
+  const parent = await parentService.getParentByUser(profile.id);
+  return {
+    ...profile,
+    parentId: parent?.id || null,
+  };
+};
+
 export const authService = {
   async sendOtp({countryCode, phoneNumber}) {
-    const fullPhoneNumber = buildFullPhoneNumber({countryCode, phoneNumber});
+    try {
+      const fullPhoneNumber = buildFullPhoneNumber({countryCode, phoneNumber});
+      const authInstance = getAuth();
 
-    if (__DEV__ && isDemoPhoneNumber(phoneNumber)) {
-      const verificationId = `demo-verification-${Date.now()}`;
-      storage.set(STORAGE_KEYS.OTP_VERIFICATION_ID, verificationId);
-      return {verificationId, fullPhoneNumber};
+      authInstance.settings.appVerificationDisabledForTesting =
+        authConfig.disablePhoneAuthAppVerificationForTesting;
+      
+      const confirmation = await signInWithPhoneNumber(authInstance, fullPhoneNumber);
+      storage.set(STORAGE_KEYS.OTP_VERIFICATION_ID, confirmation.verificationId);
+
+      return successResponse(
+        {
+          verificationId: confirmation.verificationId,
+          fullPhoneNumber,
+        },
+        'OTP sent successfully',
+      );
+    } catch (error) {
+      return errorResponse(error, 'Unable to send OTP');
     }
-
-    const confirmation = await auth().signInWithPhoneNumber(fullPhoneNumber);
-    storage.set(STORAGE_KEYS.OTP_VERIFICATION_ID, confirmation.verificationId);
-
-    return {
-      verificationId: confirmation.verificationId,
-      fullPhoneNumber,
-    };
   },
 
   async verifyOtp({verificationId, otp, countryCode, phoneNumber}) {
-    let credentialUser = null;
-
-    if (__DEV__ && String(verificationId || '').startsWith('demo-verification')) {
-      if (otp !== '123456') {
-        throw new Error('Invalid demo OTP');
-      }
-      credentialUser = {
-        uid: `demo-${getDemoRoleFromPhone(phoneNumber).toLowerCase()}`,
-        phoneNumber: buildFullPhoneNumber({countryCode, phoneNumber}),
-        getIdToken: async () => `demo-token-${Date.now()}`,
-      };
-    } else {
-      const credential = auth.PhoneAuthProvider.credential(verificationId, otp);
-      const result = await auth().signInWithCredential(credential);
-      credentialUser = result.user;
-    }
-
-    const token = await credentialUser.getIdToken();
-    const fallback = buildDemoUser({
-      countryCode,
-      phoneNumber: credentialUser.phoneNumber || buildFullPhoneNumber({countryCode, phoneNumber}),
-      firebaseUID: credentialUser.uid,
-    });
-
-    let profile = null;
     try {
-      profile = await fetchUserProfile(credentialUser.uid);
-    } catch (error) {
-      if (!__DEV__) {
-        throw error;
+      const credential = PhoneAuthProvider.credential(verificationId, otp);
+      const authInstance = getAuth();
+      const result = await signInWithCredential(authInstance, credential);
+      const credentialUser = result.user;
+
+      const token = await getIdToken(credentialUser);
+      let profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
+      const fullPhoneNumber =
+        credentialUser.phoneNumber || buildFullPhoneNumber({countryCode, phoneNumber});
+
+      if (!profile) {
+        const pendingProfile = await fetchUserProfileByPhone(fullPhoneNumber);
+
+        if (pendingProfile) {
+          await claimUserProfile(pendingProfile.id);
+          profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
+        }
       }
+
+      if (!profile) {
+        // Auto-create the user as a MAIN_ADMIN for testing.
+        console.log('No profile found, auto-creating MAIN_ADMIN profile...');
+        await dataConnectClient.mutate(DATA_CONNECT_MUTATIONS.CREATE_USER, {
+          firebaseUID: credentialUser.uid,
+          fullName: 'Main Admin',
+          countryCode: countryCode,
+          phoneNumber: fullPhoneNumber,
+          role: USER_ROLES.MAIN_ADMIN,
+        });
+        
+        // Fetch the newly created profile
+        profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
+        if (!profile) {
+          throw new Error('Active user profile not found and auto-creation failed');
+        }
+      }
+
+      const user = normalizeProfile(profile, {
+        countryCode,
+        phoneNumber: fullPhoneNumber,
+      });
+
+      setJSON(STORAGE_KEYS.AUTH_USER, user);
+      storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
+
+      return successResponse({user, token}, 'Login successful');
+    } catch (error) {
+      return errorResponse(error, 'Unable to verify OTP');
     }
-
-    const user = normalizeProfile(profile, fallback);
-
-    setJSON(STORAGE_KEYS.AUTH_USER, user);
-    storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
-
-    return {user, token};
   },
 
   async logout() {
-    await auth().signOut();
+    const authInstance = getAuth();
+    await signOut(authInstance);
     removeStorageKeys([
       STORAGE_KEYS.AUTH_TOKEN,
       STORAGE_KEYS.AUTH_USER,
@@ -140,9 +166,25 @@ export const authService = {
   },
 
   async getStoredSession() {
+    const authInstance = getAuth();
+    const currentUser = authInstance.currentUser;
+
+    if (currentUser) {
+      const token = await getIdToken(currentUser);
+      const profile = await hydrateRoleProfile(await fetchUserProfile(currentUser.uid));
+
+      if (profile) {
+        const user = normalizeProfile(profile, {
+          phoneNumber: currentUser.phoneNumber,
+        });
+        setJSON(STORAGE_KEYS.AUTH_USER, user);
+        storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
+        return {token, user};
+      }
+    }
+
     const token = storage.getString(STORAGE_KEYS.AUTH_TOKEN);
     const user = getJSON(STORAGE_KEYS.AUTH_USER);
-
     return token && user ? {token, user} : null;
   },
 };

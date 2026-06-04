@@ -3,27 +3,33 @@ import dataConnectClient from '../dataconnect/dataConnectClient';
 
 export const parentService = {
   async getParentChildren(parentId) {
-    try {
-      const response = await dataConnectClient.query(DATA_CONNECT_QUERIES.GET_PARENT_CHILDREN, {
-        parentId,
-      });
-      return response.students || [];
-    } catch (error) {
-      return [
-        {
-          id: 'student-1',
-          studentId: '2026010001',
-          fullName: 'Aarav Kumar',
-          academicClassId: 'class-1',
-          sectionId: 'section-a',
-        },
-      ];
+    if (!parentId) {
+      return [];
     }
+
+    const response = await dataConnectClient.query(DATA_CONNECT_QUERIES.GET_PARENT_CHILDREN, {
+      parentId,
+    });
+    return response.students || [];
   },
 
   async createParent(payload) {
-    const response = await dataConnectClient.mutate(DATA_CONNECT_MUTATIONS.CREATE_PARENT, payload);
+    const mutation = payload.userId
+      ? DATA_CONNECT_MUTATIONS.CREATE_PARENT
+      : DATA_CONNECT_MUTATIONS.CREATE_PARENT_WITHOUT_USER;
+    const response = await dataConnectClient.mutate(mutation, payload);
     return {id: response.parent_insert, ...payload, isActive: true};
+  },
+
+  async getParentByUser(userId) {
+    if (!userId) {
+      return null;
+    }
+
+    const response = await dataConnectClient.query(DATA_CONNECT_QUERIES.GET_PARENT_BY_USER, {
+      userId,
+    });
+    return response.parents?.[0] || null;
   },
 };
 

@@ -10,32 +10,10 @@ import {colors, spacing} from '../../theme';
 import {formatCurrency} from '../../utils/formatters/currency';
 import ScreenContainer from '../common/ScreenContainer';
 import SectionHeader from '../common/SectionHeader';
-import ActivityList from './ActivityList';
 import AttendanceCard from './AttendanceCard';
 import DashboardHeader from './DashboardHeader';
 import StatCard from './StatCard';
 import SummaryCard from './SummaryCard';
-
-const defaultActivities = [
-  {
-    id: 'a1',
-    title: 'Attendance submitted for Class 1-A',
-    time: 'Today - 09:45 AM',
-    icon: 'clipboard-check-outline',
-  },
-  {
-    id: 'a2',
-    title: 'Fee ledger updated for Meera Rao',
-    time: 'Today - 11:10 AM',
-    icon: 'cash-sync',
-  },
-  {
-    id: 'a3',
-    title: 'Academic structure review pending',
-    time: 'Yesterday',
-    icon: 'calendar-clock',
-  },
-];
 
 const RoleDashboard = ({
   role,
@@ -58,11 +36,11 @@ const RoleDashboard = ({
   const present =
     attendance[0]?.records?.filter(item => item.status === 'present').length ||
     attendance[0]?.records?.filter(item => item.status === ATTENDANCE_STATUS.PRESENT).length ||
-    38;
+    0;
   const absent =
     attendance[0]?.records?.filter(item => item.status === 'absent').length ||
     attendance[0]?.records?.filter(item => item.status === ATTENDANCE_STATUS.ABSENT).length ||
-    3;
+    0;
 
   return (
     <ScreenContainer>
@@ -114,11 +92,11 @@ const RoleDashboard = ({
         subtitle="Live operational snapshot"
       />
       <AttendanceCard
-        title="Class 1 - Section A"
+        title="Today"
         date="Today"
         present={present}
         absent={absent}
-        late={1}
+        late={0}
         status={ATTENDANCE_STATUS.PRESENT}
       />
 
@@ -133,12 +111,6 @@ const RoleDashboard = ({
         progress={feeSummary.collectionRate}
         tone={colors.primary}
       />
-
-      <SectionHeader
-        title="Recent Activity"
-        subtitle="Latest school ERP events"
-      />
-      <ActivityList items={defaultActivities} />
     </ScreenContainer>
   );
 };

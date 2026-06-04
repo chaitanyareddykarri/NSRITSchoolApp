@@ -75,10 +75,10 @@ const LoginScreen = ({navigation}) => {
         Send OTP
       </CustomButton>
 
-      <View style={styles.demoHint}>
+      <View style={styles.loginHint}>
         <RoleCard
           role="MAIN_ADMIN"
-          description="Demo phones use suffixes: 0001 admin, 0005 teacher, 0006 parent, 0007 accountant. Demo OTP: 123456."
+          description="Use the phone number registered by your school administrator. Your role is loaded after OTP verification."
         />
       </View>
     </ScreenContainer>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   phoneInput: {
     flex: 1,
   },
-  demoHint: {
+  loginHint: {
     marginTop: spacing.xl,
   },
 });

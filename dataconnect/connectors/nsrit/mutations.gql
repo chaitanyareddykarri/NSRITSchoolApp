@@ -3,6 +3,11 @@ mutation CreateBranch(
   $branchCode: String!
   $address: String
   $city: String
+  $state: String
+  $pincode: String
+  $phone: String
+  $email: String
+  $status: String = "ACTIVE"
 ) @auth(level: USER) {
   branch_insert(
     data: {
@@ -10,7 +15,88 @@ mutation CreateBranch(
       branchCode: $branchCode
       address: $address
       city: $city
+      state: $state
+      pincode: $pincode
+      phone: $phone
+      email: $email
+      status: $status
       isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation UpdateBranch(
+  $id: UUID!
+  $name: String!
+  $address: String
+  $city: String
+  $state: String
+  $pincode: String
+  $phone: String
+  $email: String
+  $status: String!
+  $isActive: Boolean!
+) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Main Admin required") {
+      id
+      role
+    }
+  }
+  branch_update(
+    id: $id
+    data: {
+      name: $name
+      address: $address
+      city: $city
+      state: $state
+      pincode: $pincode
+      phone: $phone
+      email: $email
+      status: $status
+      isActive: $isActive
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation AssignBranchAdmin($branchId: UUID!, $branchAdminId: UUID!) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Main Admin required") {
+      id
+      role
+    }
+  }
+  branch_update(
+    id: $branchId
+    data: {
+      branchAdmin: {id: $branchAdminId}
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation AssignPrincipal($branchId: UUID!, $principalId: UUID!) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Main Admin required") {
+      id
+      role
+    }
+  }
+  branch_update(
+    id: $branchId
+    data: {
+      principal: {id: $principalId}
       updatedAt_expr: "request.time"
     }
   )
@@ -47,8 +133,46 @@ mutation CreateSection(
   )
 }
 
+mutation RemoveSection($id: UUID!) @auth(level: USER) {
+  section_update(id: $id, data: {isActive: false, updatedAt_expr: "request.time"})
+}
+
+mutation CreateUser(
+  $firebaseUID: String!
+  $fullName: String!
+  $countryCode: String!
+  $phoneNumber: String!
+  $role: String!
+  $branchId: UUID
+  $wingId: UUID
+) @auth(level: USER) {
+  user_insert(
+    data: {
+      firebaseUID: $firebaseUID
+      fullName: $fullName
+      countryCode: $countryCode
+      phoneNumber: $phoneNumber
+      role: $role
+      branch: {id: $branchId}
+      wing: {id: $wingId}
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation ClaimUserFirebaseUID($id: UUID!) @auth(level: USER) {
+  user_update(
+    id: $id
+    data: {
+      firebaseUID_expr: "auth.uid"
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
 mutation CreateParent(
-  $userId: UUID!
+  $userId: UUID
   $branchId: UUID!
   $fullName: String!
   $countryCode: String!
@@ -58,6 +182,26 @@ mutation CreateParent(
   parent_insert(
     data: {
       user: {id: $userId}
+      branch: {id: $branchId}
+      fullName: $fullName
+      countryCode: $countryCode
+      phoneNumber: $phoneNumber
+      address: $address
+      isActive: true
+      updatedAt_expr: "request.time"
+    }
+  )
+}
+
+mutation CreateParentWithoutUser(
+  $branchId: UUID!
+  $fullName: String!
+  $countryCode: String!
+  $phoneNumber: String!
+  $address: String
+) @auth(level: USER) {
+  parent_insert(
+    data: {
       branch: {id: $branchId}
       fullName: $fullName
       countryCode: $countryCode
@@ -204,3 +348,6 @@ mutation AssignTeacher(
     }
   )
 }
+
+
+

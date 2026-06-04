@@ -77,5 +77,18 @@ yarn-error.log
 
 *.env
 
+*vsce-debug.log
 
 *google-services.json
+
+# Local and System Generated
+.agents\skills
+
+*skills-lock.json
+
+.bundle/
+
+# Firebase Cache & Data Connect Generated
+.firebase/
+
+dataconnect/.dataconnect/

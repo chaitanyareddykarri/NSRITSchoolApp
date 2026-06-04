@@ -792,6 +792,15 @@ extend type Branch {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Branch.address", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Branch` table where the `branchAdminId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  branchAdminId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.branchAdminId", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Branch` table where the `branchCode` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   branchCode_count(
@@ -819,6 +828,15 @@ extend type Branch {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Branch.createdAt", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Branch` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.email", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Branch` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   id_count(
@@ -845,6 +863,51 @@ extend type Branch {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Branch.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Branch` table where the `phone` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  phone_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.phone", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Branch` table where the `pincode` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  pincode_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.pincode", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Branch` table where the `principalId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  principalId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.principalId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Branch` table where the `state` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  state_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.state", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Branch` table where the `status` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  status_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Branch.status", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Branch` table where the `updatedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -1450,6 +1513,24 @@ extend type Parent {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Parent.createdAt", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Parent` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Parent.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Parent` table where the `fatherName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  fatherName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Parent.fatherName", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Parent` table where the `fullName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   fullName_count(
@@ -1476,6 +1557,15 @@ extend type Parent {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Parent.isActive", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Parent` table where the `motherName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  motherName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Parent.motherName", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Parent` table where the `phoneNumber` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -2054,6 +2144,15 @@ extend type Student {
   """
   _count: Int! @fdc_generated(from: "Student.", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Student` table where the `aadhaarDocumentUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  aadhaarDocumentUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.aadhaarDocumentUrl", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Student` table where the `academicClassId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   academicClassId_count(
@@ -2089,6 +2188,24 @@ extend type Student {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Student.admissionYear", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `birthCertificateUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  birthCertificateUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.birthCertificateUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `bloodGroup` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  bloodGroup_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.bloodGroup", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Student` table where the `branchCode` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -2189,6 +2306,24 @@ extend type Student {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Student.phoneNumber", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Student` table where the `photoUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  photoUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.photoUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `rollNumber` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  rollNumber_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.rollNumber", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Student` table where the `sectionId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   sectionId_count(
@@ -2215,6 +2350,15 @@ extend type Student {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Student.studentId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `transferCertificateUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  transferCertificateUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.transferCertificateUrl", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Student` table where the `updatedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -3024,6 +3168,74 @@ extend type User {
     """
     having: Attendance_Having
   ): [Attendance!]! @fdc_generated(from: "Attendance.markedBy", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Branch` objects in a one-to-many relationship (where `Branch`.`branchAdmin` is this object).
+  """
+  branches_on_branchAdmin(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Branch_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Branch_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Branch_Having
+  ): [Branch!]! @fdc_generated(from: "Branch.branchAdmin", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Branch` objects in a one-to-many relationship (where `Branch`.`principal` is this object).
+  """
+  branches_on_principal(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Branch_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Branch_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Branch_Having
+  ): [Branch!]! @fdc_generated(from: "Branch.principal", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
   """
   ✨ List `Notification` objects in a one-to-many relationship (where `Notification`.`user` is this object).
   """

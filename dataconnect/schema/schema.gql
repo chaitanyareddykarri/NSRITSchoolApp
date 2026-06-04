@@ -8,9 +8,21 @@ type Branch @table(name: "branches", key: "id") {
   branchCode: String! @col(dataType: "varchar(2)")
   address: String
   city: String @col(dataType: "varchar(80)")
+  state: String @col(dataType: "varchar(80)")
+  pincode: String @col(dataType: "varchar(12)")
+  phone: String @col(dataType: "varchar(20)")
+  email: String @col(dataType: "varchar(140)")
+  status: String! @col(dataType: "varchar(20)") @default(value: "ACTIVE")
+  branchAdmin: User
+  principal: User
   isActive: Boolean! @default(value: true)
   createdAt: Timestamp! @default(expr: "request.time")
   updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+extend type Branch {
+  branchAdminId: UUID
+  principalId: UUID
 }
 
 type Wing @table(name: "wings", key: "id") {
@@ -81,11 +93,14 @@ extend type User {
 
 type Parent @table(name: "parents", key: "id") {
   id: UUID! @default(expr: "uuidV4()")
-  user: User!
+  user: User
   branch: Branch!
   fullName: String! @col(dataType: "varchar(140)")
+  fatherName: String @col(dataType: "varchar(140)")
+  motherName: String @col(dataType: "varchar(140)")
   countryCode: String! @col(dataType: "varchar(5)")
   phoneNumber: String! @col(dataType: "varchar(20)")
+  email: String @col(dataType: "varchar(140)")
   address: String
   isActive: Boolean! @default(value: true)
   createdAt: Timestamp! @default(expr: "request.time")
@@ -93,7 +108,7 @@ type Parent @table(name: "parents", key: "id") {
 }
 
 extend type Parent {
-  userId: UUID!
+  userId: UUID
   branchId: UUID!
 }
 
@@ -114,14 +129,20 @@ type Student @table(name: "students", key: "id") {
   fullName: String! @col(dataType: "varchar(140)")
   gender: String @col(dataType: "varchar(20)")
   dateOfBirth: Date
+  photoUrl: String
+  bloodGroup: String @col(dataType: "varchar(10)")
   branch: Branch!
   wing: Wing
   academicClass: AcademicClass!
   section: Section!
   parent: Parent!
+  rollNumber: String @col(dataType: "varchar(30)")
   countryCode: String @col(dataType: "varchar(5)")
   phoneNumber: String @col(dataType: "varchar(20)")
   address: String
+  aadhaarDocumentUrl: String
+  transferCertificateUrl: String
+  birthCertificateUrl: String
   admissionDate: Date!
   isActive: Boolean! @default(value: true)
   createdAt: Timestamp! @default(expr: "request.time")
