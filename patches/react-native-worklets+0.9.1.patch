@@ -1,0 +1,91 @@
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/checksums/checksums.lock b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/checksums.lock
+new file mode 100644
+index 0000000..5f587ed
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/checksums.lock differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/checksums/md5-checksums.bin b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/md5-checksums.bin
+new file mode 100644
+index 0000000..12b9e25
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/md5-checksums.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/checksums/sha1-checksums.bin b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/sha1-checksums.bin
+new file mode 100644
+index 0000000..b2a8f89
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/checksums/sha1-checksums.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.bin b/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.bin
+new file mode 100644
+index 0000000..7cb2eae
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.lock b/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.lock
+new file mode 100644
+index 0000000..b7392b2
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/executionHistory/executionHistory.lock differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/fileChanges/last-build.bin b/node_modules/react-native-worklets/android/.gradle/8.14/fileChanges/last-build.bin
+new file mode 100644
+index 0000000..f76dd23
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/fileChanges/last-build.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.bin b/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.bin
+new file mode 100644
+index 0000000..0d7a8aa
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.lock b/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.lock
+new file mode 100644
+index 0000000..346c6a7
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/8.14/fileHashes/fileHashes.lock differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/8.14/gc.properties b/node_modules/react-native-worklets/android/.gradle/8.14/gc.properties
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+new file mode 100644
+index 0000000..541751d
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/cache.properties b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/cache.properties
+new file mode 100644
+index 0000000..4a9d63c
+--- /dev/null
++++ b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/cache.properties
+@@ -0,0 +1,2 @@
++#Fri Jun 05 12:44:30 IST 2026
++gradle.version=8.14
+diff --git a/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/outputFiles.bin b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/outputFiles.bin
+new file mode 100644
+index 0000000..89005a6
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/buildOutputCleanup/outputFiles.bin differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/file-system.probe b/node_modules/react-native-worklets/android/.gradle/file-system.probe
+new file mode 100644
+index 0000000..af8c336
+Binary files /dev/null and b/node_modules/react-native-worklets/android/.gradle/file-system.probe differ
+diff --git a/node_modules/react-native-worklets/android/.gradle/vcs-1/gc.properties b/node_modules/react-native-worklets/android/.gradle/vcs-1/gc.properties
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/react-native-worklets/android/CMakeLists.txt b/node_modules/react-native-worklets/android/CMakeLists.txt
+index 9f803d3..328ce8c 100644
+--- a/node_modules/react-native-worklets/android/CMakeLists.txt
++++ b/node_modules/react-native-worklets/android/CMakeLists.txt
+@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.16)
+ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+ 
+ set(CMAKE_CXX_STANDARD 20)
++set(CMAKE_ANDROID_STL_TYPE c++_shared)
+ 
+ # Consume shared libraries and headers from prefabs
+ find_package(fbjni REQUIRED CONFIG)
+@@ -85,6 +86,8 @@ set_target_properties(worklets PROPERTIES LINKER_LANGUAGE CXX)
+ 
+ target_link_libraries(worklets android log ReactAndroid::reactnative
+                       ReactAndroid::jsi fbjni::fbjni)
++find_library(CPP_SHARED_LIB c++_shared REQUIRED)
++target_link_libraries(worklets ${CPP_SHARED_LIB})
+ 
+ if(ReactAndroid_VERSION_MINOR GREATER_EQUAL 82)
+   target_link_libraries(worklets hermes-engine::hermesvm)
+diff --git a/node_modules/react-native-worklets/android/build.gradle.kts b/node_modules/react-native-worklets/android/build.gradle.kts
+index 6b80964..a4f354e 100644
+--- a/node_modules/react-native-worklets/android/build.gradle.kts
++++ b/node_modules/react-native-worklets/android/build.gradle.kts
+@@ -189,6 +189,7 @@ android {
+             cmake {
+                 arguments(
+                     "-DANDROID_STL=c++_shared",
++                    "-DCMAKE_ANDROID_STL_TYPE=c++_shared",
+                     "-DANDROID_TOOLCHAIN=clang",
+                     "-DREACT_NATIVE_DIR=${toPlatformFileString(reactNativeRootDir.path)}",
+                     "-DIS_REANIMATED_EXAMPLE_APP=$IS_REANIMATED_EXAMPLE_APP",

@@ -1,18 +1,36 @@
 import {MMKV} from 'react-native-mmkv';
 
-export const storage = new MMKV({
+const storage = new MMKV({
   id: 'nsrit-connect-storage',
 });
 
+export {storage};
+
 export const setJSON = (key, value) => {
-  storage.set(key, JSON.stringify(value));
+  try {
+    storage.set(key, JSON.stringify(value));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('setJSON failed:', e);
+  }
 };
 
 export const getJSON = key => {
-  const value = storage.getString(key);
-  return value ? JSON.parse(value) : null;
+  try {
+    const value = storage.getString(key);
+    return value ? JSON.parse(value) : null;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('getJSON failed:', e);
+    return null;
+  }
 };
 
 export const removeStorageKeys = keys => {
-  keys.forEach(key => storage.delete(key));
+  try {
+    keys.forEach(key => storage.delete(key));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('removeStorageKeys failed:', e);
+  }
 };

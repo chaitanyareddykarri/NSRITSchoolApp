@@ -9,7 +9,26 @@ import AppNavigator from './src/navigation/AppNavigator';
 import store from './src/store';
 import {colors, paperTheme} from './src/theme';
 
+import {MMKV} from 'react-native-mmkv';
+
 const App = () => {
+  React.useEffect(() => {
+    try {
+      const storage = new MMKV({
+        id: 'nsrit-connect-storage',
+      });
+      console.log('MMKV_TEST_START');
+      const prev = storage.getString('test');
+      console.log('MMKV_TEST_PREV_VAL:', prev);
+      storage.set('test', '123');
+      const curr = storage.getString('test');
+      console.log('MMKV_TEST_CURR_VAL:', curr);
+      console.log('MMKV_TEST_END');
+    } catch (e) {
+      console.error('MMKV_TEST_ERROR:', e);
+    }
+  }, []);
+
   return (
     <GestureHandlerRootView style={styles.root}>
       <Provider store={store}>
