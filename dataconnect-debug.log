@@ -1,0 +1,96 @@
+I0605 23:48:31.251133   34986 load.go:31] Reloading schema and connectors...
+I0605 23:48:31.289236   34986 control.go:100] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 08a9] UpdateResources(): done
+Main schema: sources: schema/schema.gql [8802B] 
+Connector "nsrit": sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+I0605 23:48:31.343427   34986 codegen.go:101] [connector "nsrit" javascriptSdk] Generating sources into "/Users/naveen/remod/NSRITSchoolApp/dataconnect/connectors/nsrit/..\\..\\..\\src\\dataconnect-generated"
+I0605 23:48:31.366437   34986 collector.go:107] schema extensions wrote into "/Users/naveen/remod/NSRITSchoolApp/dataconnect/.dataconnect/schema"
+Generated sources: prelude.gql [84995B] main/input.gql [246029B] main/relation.gql [131045B] main/query.gql [20574B] main/mutation.gql [55904B] 
+I0605 23:48:31.369743   34986 collector.go:107] connector "nsrit" javascriptSdk wrote into "/Users/naveen/remod/NSRITSchoolApp/dataconnect/connectors/nsrit/..\\..\\..\\src\\dataconnect-generated"
+Generated sources: index.d.ts [63672B] esm/index.esm.js [30013B] index.cjs.js [33308B] package.json [851B] README.md [252485B] esm/package.json [17B] react/index.d.ts [23866B] react/package.json [458B] react/index.cjs.js [19301B] react/esm/index.esm.js [18175B] .guides/usage.md [4244B] react/README.md [243485B] .guides/setup.md [1682B] react/esm/package.json [17B] .guides/config.json [236B] 
+I0605 23:48:31.369766   34986 installsdk.go:35] Unable to find package.json. Skipping automatic installation of @dataconnect/generated
+I0605 23:48:31.369776   34986 load.go:109] Finished reloading
+I0605 23:48:31.369844   34986 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I0605 23:48:31.369901   34986 dev.go:104] Listening on address (HTTP + gRPC): [::1]:9399
+I0605 23:48:33.815470   34986 control.go:100] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] UpdateResources(): done
+Main schema: sources: schema/schema.gql [8802B] 
+Connector "nsrit": sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+I0605 23:48:33.841024   34986 configure_emulator.go:21] ConfigureEmulator successed
+Request: service_id: "nsrit-school-2b749-service"
+connection_string: "postgres://127.0.0.1:5432/nsrit-school-2b749-2-database?sslmode=disable"
+database: "nsrit-school-2b749-2-database"
+
+Response: 
+I0605 23:52:12.772319   34986 execute.go:57] Database ping is quick (likely cached), took 3.559833ms
+I0605 23:52:12.784561   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0605 23:52:13.556504   34986 execute.go:57] Database ping is quick (likely cached), took 822.541µs
+I0605 23:52:13.560004   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetUserByPhone: succeeded. Connector: nsrit
+I0605 23:52:13.782617   34986 execute.go:57] Database ping is quick (likely cached), took 499.542µs
+I0605 23:52:13.804328   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteMutation mutation CreateUser: succeeded. Connector: nsrit
+I0605 23:52:14.114107   34986 execute.go:57] Database ping is quick (likely cached), took 1.232333ms
+I0605 23:52:14.117399   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0605 23:52:20.845320   34986 execute.go:57] Database ping is quick (likely cached), took 846.916µs
+I0605 23:52:20.852384   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetAllFeeRecords: succeeded. Connector: nsrit
+I0605 23:52:20.862588   34986 execute.go:57] Database ping is quick (likely cached), took 375.875µs
+I0605 23:52:20.870102   34986 every.go:43] @check passed after running 1 checks
+I0605 23:52:20.870789   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetDashboardStatistics: succeeded. Connector: nsrit
+I0606 00:07:46.317622   34986 execute.go:57] Database ping is quick (likely cached), took 2.966541ms
+I0606 00:07:46.323066   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0606 00:07:49.254274   34986 execute.go:57] Database ping is quick (likely cached), took 1.050209ms
+I0606 00:07:49.257461   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetAllFeeRecords: succeeded. Connector: nsrit
+I0606 00:07:49.540155   34986 execute.go:57] Database ping is quick (likely cached), took 1.194333ms
+I0606 00:07:49.547751   34986 every.go:43] @check passed after running 1 checks
+I0606 00:07:49.547908   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetDashboardStatistics: succeeded. Connector: nsrit
+I0606 00:14:02.837739   34986 execute.go:57] Database ping is quick (likely cached), took 4.60375ms
+I0606 00:14:02.842488   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0606 00:14:11.476545   34986 execute.go:57] Database ping is quick (likely cached), took 841.875µs
+I0606 00:14:11.479816   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetAllFeeRecords: succeeded. Connector: nsrit
+I0606 00:14:11.497058   34986 execute.go:57] Database ping is quick (likely cached), took 480.875µs
+I0606 00:14:11.501116   34986 every.go:43] @check passed after running 1 checks
+I0606 00:14:11.501213   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetDashboardStatistics: succeeded. Connector: nsrit
+W0606 00:26:15.774302   34986 engine.go:207] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: failed with explicit status error: rpc error: code = Unauthenticated desc = unauthenticated: this operation requires a signed-in user. Connector: nsrit
+Auth: public
+
+Variables Set: [firebaseUID]
+Status: code:16 message:"unauthenticated: this operation requires a signed-in user"
+Errors: [message:"@auth rejected the request" extensions:{code:UNAUTHENTICATED debug_details:"@auth(level: USER) requires a signed-in user"}]
+sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+W0606 00:30:04.126666   34986 engine.go:207] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: failed with explicit status error: rpc error: code = Unauthenticated desc = unauthenticated: this operation requires a signed-in user. Connector: nsrit
+Auth: public
+
+Variables Set: [firebaseUID]
+Status: code:16 message:"unauthenticated: this operation requires a signed-in user"
+Errors: [message:"@auth rejected the request" extensions:{code:UNAUTHENTICATED debug_details:"@auth(level: USER) requires a signed-in user"}]
+sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+W0606 00:30:05.045678   34986 engine.go:207] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: failed with explicit status error: rpc error: code = Unauthenticated desc = unauthenticated: this operation requires a signed-in user. Connector: nsrit
+Auth: public
+
+Variables Set: [firebaseUID]
+Status: code:16 message:"unauthenticated: this operation requires a signed-in user"
+Errors: [message:"@auth rejected the request" extensions:{code:UNAUTHENTICATED debug_details:"@auth(level: USER) requires a signed-in user"}]
+sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+W0606 00:30:40.194149   34986 engine.go:207] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: failed with explicit status error: rpc error: code = Unauthenticated desc = unauthenticated: this operation requires a signed-in user. Connector: nsrit
+Auth: user of {"UID":"LwXTpGJFcD9FbHtiheM9kReAG6h5","Token":{"aud":"nsrit-school-2b749","auth_time":1780686025,"exp":1780689625,"firebase":{"identities":{},"sign_in_provider":"anonymous"},"iat":1780686025,"iss":"https://securetoken.google.com/nsrit-school-2b749","provider_id":"anonymous","sub":"LwXTpGJFcD9FbHtiheM9kReAG6h5","user_id":"LwXTpGJFcD9FbHtiheM9kReAG6h5"}}
+
+Variables Set: [firebaseUID]
+Status: code:16 message:"unauthenticated: this operation requires a signed-in user"
+Errors: [message:"@auth rejected the request" extensions:{code:UNAUTHENTICATED debug_details:"@auth(level: USER) doesn't allow anonymous users"}]
+sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+W0606 00:33:58.105216   34986 engine.go:207] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: failed with explicit status error: rpc error: code = Unauthenticated desc = unauthenticated: this operation requires a signed-in user. Connector: nsrit
+Auth: public
+
+Variables Set: [firebaseUID]
+Status: code:16 message:"unauthenticated: this operation requires a signed-in user"
+Errors: [message:"@auth rejected the request" extensions:{code:UNAUTHENTICATED debug_details:"@auth(level: USER) requires a signed-in user"}]
+sources: connectors/nsrit/mutations.gql [7653B] connectors/nsrit/queries.gql [17366B] 
+I0606 00:34:34.962146   34986 execute.go:57] Database ping is quick (likely cached), took 1.774958ms
+I0606 00:34:34.964412   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteGraphql query : succeeded. 
+I0606 00:36:30.135013   34986 execute.go:57] Database ping is quick (likely cached), took 961.417µs
+I0606 00:36:30.137713   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteGraphql query : succeeded. 
+I0606 00:37:50.795160   34986 execute.go:57] Database ping is quick (likely cached), took 1.520041ms
+I0606 00:37:50.798374   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0606 00:38:44.213730   34986 execute.go:57] Database ping is quick (likely cached), took 471.625µs
+I0606 00:38:44.215019   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetCurrentUser: succeeded. Connector: nsrit
+I0606 00:38:44.251115   34986 execute.go:57] Database ping is quick (likely cached), took 373.5µs
+I0606 00:38:44.252347   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteQuery query GetUserByPhone: succeeded. Connector: nsrit
+I0606 00:38:59.463813   34986 execute.go:57] Database ping is quick (likely cached), took 1.049792ms
+I0606 00:38:59.465287   34986 engine.go:209] [projects/emulator/locations/emulator/services/nsrit-school-2b749-service 6446] ExecuteGraphql query : succeeded. 

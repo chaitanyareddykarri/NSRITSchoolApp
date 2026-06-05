@@ -17,9 +17,11 @@ export const dataConnectConfig = {
   location: 'asia-south1',
   serviceId: 'nsrit-school-2b749-service',
   connectorId: 'nsrit',
-  apiBaseURL: 'https://firebasedataconnect.googleapis.com/v1',
+  apiBaseURL: (typeof __DEV__ !== 'undefined' && __DEV__)
+    ? 'http://10.0.2.2:9399/v1'
+    : 'https://firebasedataconnect.googleapis.com/v1',
 };
 
 export const authConfig = {
-  disablePhoneAuthAppVerificationForTesting: false,
+  disablePhoneAuthAppVerificationForTesting: true,
 };

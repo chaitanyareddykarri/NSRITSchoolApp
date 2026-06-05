@@ -23,13 +23,16 @@ const OTPVerificationScreen = ({route}) => {
   };
 
   const handleVerify = async () => {
+    console.log('OTPVerificationScreen: handleVerify called. OTP:', otp, 'params:', params);
     const validationError = validateOtp(otp);
     if (validationError) {
+      console.log('OTPVerificationScreen: validation error:', validationError);
       setLocalError(validationError);
       return;
     }
 
-    await dispatch(
+    console.log('OTPVerificationScreen: dispatching verifyOtp thunk...');
+    const result = await dispatch(
       verifyOtp({
         otp,
         countryCode: params.countryCode,
@@ -37,6 +40,7 @@ const OTPVerificationScreen = ({route}) => {
         verificationId: params.verificationId || storedVerificationId,
       }),
     );
+    console.log('OTPVerificationScreen: verifyOtp thunk result:', result);
   };
 
   return (
