@@ -21,5 +21,5 @@ export const dataConnectConfig = {
 };
 
 export const authConfig = {
-  disablePhoneAuthAppVerificationForTesting: false,
+  disablePhoneAuthAppVerificationForTesting: true,
 };

@@ -104,53 +104,57 @@ export const authService = {
 
   async verifyOtp({verificationId, otp, countryCode, phoneNumber}) {
     try {
+      console.log('authService: verifyOtp called with payload:', {verificationId, otp, countryCode, phoneNumber});
       const credential = PhoneAuthProvider.credential(verificationId, otp);
       const authInstance = getAuth();
+
+      console.log('authService: signing in with credential...');
       const result = await signInWithCredential(authInstance, credential);
       const credentialUser = result.user;
+      console.log('authService: sign in successful, user UID:', credentialUser?.uid);
 
       const token = await getIdToken(credentialUser);
+      console.log('authService: fetched ID token');
+      
+      console.log('authService: fetching user profile for UID:', credentialUser.uid);
       let profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
+      console.log('authService: profile fetched:', profile);
+      
       const fullPhoneNumber =
         credentialUser.phoneNumber || buildFullPhoneNumber({countryCode, phoneNumber});
 
       if (!profile) {
+        console.log('authService: profile is null, checking pending profile by phone:', fullPhoneNumber);
         const pendingProfile = await fetchUserProfileByPhone(fullPhoneNumber);
+        console.log('authService: pending profile fetched:', pendingProfile);
 
         if (pendingProfile) {
+          console.log('authService: pending profile found, claiming user profile ID:', pendingProfile.id);
           await claimUserProfile(pendingProfile.id);
           profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
+          console.log('authService: profile after claim:', profile);
         }
       }
 
       if (!profile) {
-        // Auto-create the user as a MAIN_ADMIN for testing.
-        console.log('No profile found, auto-creating MAIN_ADMIN profile...');
-        await dataConnectClient.mutate(DATA_CONNECT_MUTATIONS.CREATE_USER, {
-          firebaseUID: credentialUser.uid,
-          fullName: 'Main Admin',
-          countryCode: countryCode,
-          phoneNumber: fullPhoneNumber,
-          role: USER_ROLES.MAIN_ADMIN,
-        });
-        
-        // Fetch the newly created profile
-        profile = await hydrateRoleProfile(await fetchUserProfile(credentialUser.uid));
-        if (!profile) {
-          throw new Error('Active user profile not found and auto-creation failed');
-        }
+        console.warn(`authService: Unauthorized login attempt: Phone number ${fullPhoneNumber} (UID: ${credentialUser.uid}) is not registered.`);
+        await signOut(authInstance);
+        throw new Error('Your account has not been registered. Please contact your administrator.');
       }
 
       const user = normalizeProfile(profile, {
         countryCode,
         phoneNumber: fullPhoneNumber,
       });
+      console.log('authService: normalized user profile:', user);
 
       setJSON(STORAGE_KEYS.AUTH_USER, user);
       storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
+      console.log('authService: stored user and token in MMKV storage');
 
       return successResponse({user, token}, 'Login successful');
     } catch (error) {
+      console.error('authService: error caught in verifyOtp:', error);
       return errorResponse(error, 'Unable to verify OTP');
     }
   },
