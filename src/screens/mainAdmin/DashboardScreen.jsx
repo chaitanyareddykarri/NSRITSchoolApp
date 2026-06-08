@@ -15,8 +15,12 @@ const DashboardScreen = ({navigation}) => {
     [],
   );
 
+  console.log('DashboardScreen stats content:', JSON.stringify(stats, null, 2));
+  console.log('DashboardScreen render. loading:', loading, 'stats:', stats ? 'has data' : 'null');
+
   useFocusEffect(
     useCallback(() => {
+      console.log('DashboardScreen focus effect triggered');
       refresh();
     }, [refresh]),
   );

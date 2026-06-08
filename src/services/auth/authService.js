@@ -174,16 +174,20 @@ export const authService = {
     const currentUser = authInstance.currentUser;
 
     if (currentUser) {
-      const token = await getIdToken(currentUser);
-      const profile = await hydrateRoleProfile(await fetchUserProfile(currentUser.uid));
+      try {
+        const token = await getIdToken(currentUser);
+        const profile = await hydrateRoleProfile(await fetchUserProfile(currentUser.uid));
 
-      if (profile) {
-        const user = normalizeProfile(profile, {
-          phoneNumber: currentUser.phoneNumber,
-        });
-        setJSON(STORAGE_KEYS.AUTH_USER, user);
-        storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
-        return {token, user};
+        if (profile) {
+          const user = normalizeProfile(profile, {
+            phoneNumber: currentUser.phoneNumber,
+          });
+          setJSON(STORAGE_KEYS.AUTH_USER, user);
+          storage.set(STORAGE_KEYS.AUTH_TOKEN, token);
+          return {token, user};
+        }
+      } catch (error) {
+        console.warn('Failed to fetch profile online, trying cached session:', error);
       }
     }
 

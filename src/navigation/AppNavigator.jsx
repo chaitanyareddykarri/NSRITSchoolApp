@@ -40,7 +40,10 @@ const AppNavigator = () => {
     state => state.auth,
   );
 
+  console.log('AppNavigator render state:', {isBootstrapping, isAuthenticated, role});
+
   useEffect(() => {
+    console.log('AppNavigator dispatching bootstrapAuth...');
     dispatch(bootstrapAuth());
   }, [dispatch]);
 

@@ -3,7 +3,15 @@ import authService from '../../services/auth/authService';
 import {unwrapResponse} from '../../utils/firebaseResponse';
 
 export const bootstrapAuth = createAsyncThunk('auth/bootstrap', async () => {
-  return authService.getStoredSession();
+  console.log('authSlice: bootstrapAuth thunk started');
+  try {
+    const session = await authService.getStoredSession();
+    console.log('authSlice: bootstrapAuth thunk got session:', session);
+    return session;
+  } catch (error) {
+    console.error('authSlice: bootstrapAuth thunk error:', error);
+    throw error;
+  }
 });
 
 export const loginUser = createAsyncThunk(
@@ -66,17 +74,20 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(bootstrapAuth.pending, state => {
+        console.log('authSlice: bootstrapAuth.pending');
         state.isBootstrapping = true;
       })
       .addCase(bootstrapAuth.fulfilled, (state, action) => {
         const session = action.payload;
+        console.log('authSlice: bootstrapAuth.fulfilled with session:', session);
         state.isBootstrapping = false;
         state.isAuthenticated = Boolean(session?.token && session?.user);
         state.token = session?.token || null;
         state.user = session?.user || null;
         state.role = session?.user?.role || null;
       })
-      .addCase(bootstrapAuth.rejected, state => {
+      .addCase(bootstrapAuth.rejected, (state, action) => {
+        console.log('authSlice: bootstrapAuth.rejected, action error:', action.error);
         state.isBootstrapping = false;
         state.isAuthenticated = false;
       })

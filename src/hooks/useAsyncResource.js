@@ -14,6 +14,7 @@ const useAsyncResource = (loader, dependencies = []) => {
   const load = useCallback(
     async (options = {}) => {
       const isRefresh = Boolean(options.forceRefresh);
+      console.log('useAsyncResource: load called. forceRefresh:', isRefresh);
       if (isRefresh) {
         setRefreshing(true);
       } else {
@@ -23,9 +24,11 @@ const useAsyncResource = (loader, dependencies = []) => {
 
       try {
         const result = await loaderRef.current(options);
+        console.log('useAsyncResource: load succeeded. Result:', result ? 'has data' : 'empty');
         setData(result);
         return result;
       } catch (loadError) {
+        console.error('useAsyncResource: load failed. Error:', loadError);
         setError(loadError.message || 'Unable to load data');
         return null;
       } finally {
@@ -38,7 +41,13 @@ const useAsyncResource = (loader, dependencies = []) => {
   );
 
   useEffect(() => {
+    console.log('useAsyncResource: useEffect triggering load');
     load();
+  }, [load]);
+
+  const refresh = useCallback(() => {
+    console.log('useAsyncResource: refresh called');
+    return load({forceRefresh: true});
   }, [load]);
 
   return {
@@ -47,7 +56,7 @@ const useAsyncResource = (loader, dependencies = []) => {
     refreshing,
     error,
     reload: load,
-    refresh: () => load({forceRefresh: true}),
+    refresh,
   };
 };
 
