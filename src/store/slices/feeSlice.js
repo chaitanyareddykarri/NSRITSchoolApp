@@ -20,9 +20,14 @@ export const fetchFees = createAsyncThunk(
 
 export const uploadOfflinePayment = createAsyncThunk(
   'fees/uploadOfflinePayment',
-  async (payload, {rejectWithValue}) => {
+  async (payload, {getState, rejectWithValue}) => {
     try {
-      return await feeService.uploadOfflinePayment(payload);
+      const user = getState().auth.user;
+      const scope = {
+        role: user?.role,
+        userId: user?.id,
+      };
+      return await feeService.uploadOfflinePayment(payload, scope);
     } catch (error) {
       return rejectWithValue(error.message || 'Unable to upload payment');
     }

@@ -8,7 +8,13 @@ import FeeLedgerScreen from '../screens/fees/FeeLedgerScreen';
 import PaidStudentsScreen from '../screens/fees/PaidStudentsScreen';
 import PaymentHistoryScreen from '../screens/fees/PaymentHistoryScreen';
 import StudentFeeDetailsScreen from '../screens/fees/StudentFeeDetailsScreen';
-import UploadOfflinePaymentScreen from '../screens/fees/UploadOfflinePaymentScreen';
+
+// New Custom Stitch accountant screens
+import RecordPaymentScreen from '../screens/accountant/RecordPaymentScreen';
+import ResultPostingScreen from '../screens/accountant/ResultPostingScreen';
+import CreateNotificationScreen from '../screens/accountant/CreateNotificationScreen';
+import AuditLogsScreen from '../screens/accountant/AuditLogsScreen';
+import AccountantProfileScreen from '../screens/accountant/AccountantProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +23,35 @@ const AccountantNavigator = () => (
     <Stack.Screen
       name="AccountantDashboard"
       component={DashboardScreen}
-      options={{title: 'Accountant'}}
+      options={{headerShown: false}}
     />
+    <Stack.Screen
+      name="RecordPayment"
+      component={RecordPaymentScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="ResultPosting"
+      component={ResultPostingScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="CreateNotification"
+      component={CreateNotificationScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="AuditLogs"
+      component={AuditLogsScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="AccountantProfile"
+      component={AccountantProfileScreen}
+      options={{headerShown: false}}
+    />
+
+    {/* Shared Fee screens */}
     <Stack.Screen
       name="FeeDashboard"
       component={FeeDashboardScreen}
@@ -49,10 +82,11 @@ const AccountantNavigator = () => (
       component={PaidStudentsScreen}
       options={{title: 'Paid Students'}}
     />
+    {/* Map UploadOfflinePayment to the new RecordPaymentScreen for compatibility */}
     <Stack.Screen
       name="UploadOfflinePayment"
-      component={UploadOfflinePaymentScreen}
-      options={{title: 'Upload Payment'}}
+      component={RecordPaymentScreen}
+      options={{headerShown: false}}
     />
     <Stack.Screen
       name="ClassWiseFeeReport"
