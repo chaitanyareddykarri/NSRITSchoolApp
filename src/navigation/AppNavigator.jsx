@@ -50,15 +50,30 @@ const AppNavigator = () => {
     dispatch(bootstrapAuth());
   }, [dispatch]);
 
-  return (
-    <NavigationContainer>
-      {isBootstrapping ? (
+  console.log('AppNavigator: rendering child navigator based on state');
+  
+  if (isBootstrapping) {
+    console.log('AppNavigator: rendering SplashScreen');
+    return (
+      <NavigationContainer onReady={() => console.log('NavigationContainer: Ready')}>
         <SplashScreen />
-      ) : isAuthenticated ? (
-        getRoleNavigator(role)
-      ) : (
-        <AuthNavigator />
-      )}
+      </NavigationContainer>
+    );
+  }
+
+  if (isAuthenticated) {
+    console.log('AppNavigator: rendering RoleNavigator for role:', role);
+    return (
+      <NavigationContainer onReady={() => console.log('NavigationContainer: Ready')}>
+        {getRoleNavigator(role)}
+      </NavigationContainer>
+    );
+  }
+
+  console.log('AppNavigator: rendering AuthNavigator');
+  return (
+    <NavigationContainer onReady={() => console.log('NavigationContainer: Ready')}>
+      <AuthNavigator />
     </NavigationContainer>
   );
 };

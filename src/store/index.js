@@ -7,6 +7,7 @@ import feeReducer from './slices/feeSlice';
 import studentReducer from './slices/studentSlice';
 import userReducer from './slices/userSlice';
 
+console.log('REDUX_STORE_INITIALIZATION_START');
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -18,5 +19,6 @@ export const store = configureStore({
     attendance: attendanceReducer,
   },
 });
+console.log('REDUX_STORE_INITIALIZATION_END');
 
 export default store;

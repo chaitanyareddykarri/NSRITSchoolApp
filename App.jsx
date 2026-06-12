@@ -12,6 +12,7 @@ import {colors, paperTheme} from './src/theme';
 import {MMKV} from 'react-native-mmkv';
 
 const App = () => {
+  console.log('APP_START');
   React.useEffect(() => {
     try {
       const storage = new MMKV({
@@ -29,6 +30,9 @@ const App = () => {
     }
   }, []);
 
+  console.log('APP_AFTER_MMKV');
+
+  console.log('APP_RENDER');
   return (
     <GestureHandlerRootView style={styles.root}>
       <Provider store={store}>
