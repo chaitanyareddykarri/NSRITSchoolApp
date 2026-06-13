@@ -9,22 +9,25 @@ import {
 } from 'react-native';
 
 const SplashScreen = ({ onFinish }) => {
+    // Animation Refs
     const logoScale = useRef(new Animated.Value(0.7)).current;
     const logoOpacity = useRef(new Animated.Value(0)).current;
 
     const titleOpacity = useRef(new Animated.Value(0)).current;
-    const titleTranslateY = useRef(new Animated.Value(25)).current;
+    const titleTranslateY = useRef(new Animated.Value(20)).current;
 
-    const subtitleOpacity = useRef(new Animated.Value(0)).current;
-    const dividerScale = useRef(new Animated.Value(0)).current;
-
+    const dividerScaleX = useRef(new Animated.Value(0)).current;
     const mottoOpacity = useRef(new Animated.Value(0)).current;
+
+    const sanskritOpacity = useRef(new Animated.Value(0)).current;
+    const taglineOpacity = useRef(new Animated.Value(0)).current;
+    
     const systemOpacity = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        Animated.sequence([
-            Animated.delay(200),
-
+        // Run overlapping realistic animations
+        Animated.parallel([
+            // 1. Logo scale & fade
             Animated.parallel([
                 Animated.spring(logoScale, {
                     toValue: 1,
@@ -34,54 +37,89 @@ const SplashScreen = ({ onFinish }) => {
                 }),
                 Animated.timing(logoOpacity, {
                     toValue: 1,
-                    duration: 700,
+                    duration: 600,
                     useNativeDriver: true,
                 }),
             ]),
 
-            Animated.parallel([
-                Animated.timing(titleOpacity, {
+            // 2. Title fade & slide up (starts at t=250ms)
+            Animated.sequence([
+                Animated.delay(250),
+                Animated.parallel([
+                    Animated.timing(titleOpacity, {
+                        toValue: 1,
+                        duration: 500,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(titleTranslateY, {
+                        toValue: 0,
+                        duration: 500,
+                        useNativeDriver: true,
+                    }),
+                ]),
+            ]),
+
+            // 3. Motto & Dividers expand (starts at t=450ms)
+            Animated.sequence([
+                Animated.delay(450),
+                Animated.parallel([
+                    Animated.timing(dividerScaleX, {
+                        toValue: 1,
+                        duration: 400,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(mottoOpacity, {
+                        toValue: 1,
+                        duration: 400,
+                        useNativeDriver: true,
+                    }),
+                ]),
+            ]),
+
+            // 4. Sanskrit & Tagline fade (starts at t=650ms)
+            Animated.sequence([
+                Animated.delay(650),
+                Animated.parallel([
+                    Animated.timing(sanskritOpacity, {
+                        toValue: 1,
+                        duration: 450,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(taglineOpacity, {
+                        toValue: 1,
+                        duration: 450,
+                        useNativeDriver: true,
+                    }),
+                ]),
+            ]),
+
+            // 5. System Footer & Loading dots fade (starts at t=850ms)
+            Animated.sequence([
+                Animated.delay(850),
+                Animated.timing(systemOpacity, {
                     toValue: 1,
-                    duration: 500,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(titleTranslateY, {
-                    toValue: 0,
-                    duration: 500,
+                    duration: 450,
                     useNativeDriver: true,
                 }),
             ]),
-
-            Animated.timing(subtitleOpacity, {
-                toValue: 1,
-                duration: 400,
-                useNativeDriver: true,
-            }),
-
-            Animated.timing(dividerScale, {
-                toValue: 1,
-                duration: 400,
-                useNativeDriver: true,
-            }),
-
-            Animated.timing(mottoOpacity, {
-                toValue: 1,
-                duration: 400,
-                useNativeDriver: true,
-            }),
-
-            Animated.timing(systemOpacity, {
-                toValue: 1,
-                duration: 400,
-                useNativeDriver: true,
-            }),
-
-            // Hold delay to reach ~3.5 seconds total duration
-            Animated.delay(500),
         ]).start(() => {
-            onFinish?.();
+            // Short hold delay of 1200ms before transition (Total duration = 1300ms + 1200ms = 2.5 seconds)
+            setTimeout(() => {
+                onFinish?.();
+            }, 1200);
         });
-    }, [logoScale, logoOpacity, titleOpacity, titleTranslateY, subtitleOpacity, dividerScale, mottoOpacity, systemOpacity, onFinish]);
+    }, [
+        logoScale,
+        logoOpacity,
+        titleOpacity,
+        titleTranslateY,
+        dividerScaleX,
+        mottoOpacity,
+        sanskritOpacity,
+        taglineOpacity,
+        systemOpacity,
+        onFinish
+    ]);
 
     return (
         <View style={styles.container}>
@@ -90,88 +128,83 @@ const SplashScreen = ({ onFinish }) => {
                 barStyle="dark-content"
             />
 
-            {/* Decorative Background */}
+            {/* Subtle Modern Background Shapes */}
             <View style={styles.bgCircle1} />
             <View style={styles.bgCircle2} />
 
-            {/* Logo */}
-            <Animated.View
-                style={{
-                    opacity: logoOpacity,
-                    transform: [{ scale: logoScale }],
-                }}
-            >
-                <View style={styles.logoWrapper}>
+            {/* Main Branding Content */}
+            <View style={styles.content}>
+                {/* Crest Logo */}
+                <Animated.View
+                    style={{
+                        opacity: logoOpacity,
+                        transform: [{ scale: logoScale }],
+                    }}
+                >
                     <Image
                         source={require('../assets/logo.png')}
                         style={styles.logo}
                         resizeMode="contain"
                     />
-                </View>
-            </Animated.View>
+                </Animated.View>
 
-            {/* School Name */}
-            <Animated.View
-                style={{
-                    opacity: titleOpacity,
-                    transform: [{ translateY: titleTranslateY }],
-                    alignItems: 'center',
-                    marginTop: 25,
-                }}
-            >
-                <Text style={styles.schoolName}>
-                    NADIMPALLI SATYANARAYANA RAJU
-                </Text>
-
-                <Animated.Text
+                {/* School Name Text */}
+                <Animated.View
                     style={[
-                        styles.schoolSubName,
-                        { opacity: subtitleOpacity },
+                        styles.titleContainer,
+                        {
+                            opacity: titleOpacity,
+                            transform: [{ translateY: titleTranslateY }],
+                        }
                     ]}
                 >
-                    INTERNATIONAL TECHNO SCHOOL
-                </Animated.Text>
-            </Animated.View>
+                    <Text style={styles.schoolName}>
+                        NADIMPALLI SATYANARAYANA RAJU
+                    </Text>
+                    <Text style={styles.schoolSubName}>
+                        INTERNATIONAL TECHNO SCHOOL
+                    </Text>
+                </Animated.View>
 
-            {/* Divider */}
-            <Animated.View
-                style={[
-                    styles.divider,
-                    {
-                        transform: [{ scaleX: dividerScale }],
-                    },
-                ]}
-            />
+                {/* Motto & Taglines with Dividers */}
+                <Animated.View style={[styles.mottoContainer, { opacity: mottoOpacity }]}>
+                    {/* Divider Row 1 */}
+                    <View style={styles.dividerRow}>
+                        <View style={styles.greenDot} />
+                        <Animated.View style={[styles.line, { transform: [{ scaleX: dividerScaleX }] }]} />
+                        <View style={styles.greenDot} />
+                    </View>
 
-            {/* Motto */}
-            <Animated.Text
-                style={[
-                    styles.motto,
-                    { opacity: mottoOpacity },
-                ]}
-            >
-                UNITY • LEARNING • GROWTH
-            </Animated.Text>
+                    {/* Motto */}
+                    <Text style={styles.motto}>
+                        UNITY • LEARNING • GROWTH
+                    </Text>
 
-            {/* System Badge */}
-            <Animated.View
-                style={[
-                    styles.systemTag,
-                    { opacity: systemOpacity },
-                ]}
-            >
+                    {/* Divider Row 2 with Sanskrit Text */}
+                    <View style={styles.sanskritRow}>
+                        <View style={styles.greenDot} />
+                        <Animated.View style={[styles.lineHalf, { transform: [{ scaleX: dividerScaleX }] }]} />
+                        
+                        <Animated.Text style={[styles.sanskritText, { opacity: sanskritOpacity }]}>
+                            ज्ञानं परमं बलम्
+                        </Animated.Text>
+                        
+                        <Animated.View style={[styles.lineHalf, { transform: [{ scaleX: dividerScaleX }] }]} />
+                        <View style={styles.greenDot} />
+                    </View>
+
+                    {/* English Tagline */}
+                    <Animated.Text style={[styles.tagline, { opacity: taglineOpacity }]}>
+                        Knowledge is the supreme strength
+                    </Animated.Text>
+                </Animated.View>
+            </View>
+
+            {/* Footer System Badge & Loading Indicator */}
+            <Animated.View style={[styles.footer, { opacity: systemOpacity }]}>
                 <Text style={styles.systemText}>
                     NSRIT CONNECT
                 </Text>
-            </Animated.View>
-
-            {/* Loading Dots */}
-            <Animated.View
-                style={{
-                    marginTop: 25,
-                    opacity: systemOpacity,
-                }}
-            >
                 <LoadingDots />
             </Animated.View>
         </View>
@@ -203,8 +236,8 @@ const LoadingDots = () => {
 
         Animated.parallel([
             animateDot(dot1, 0),
-            animateDot(dot2, 200),
-            animateDot(dot3, 400),
+            animateDot(dot2, 120),
+            animateDot(dot3, 240),
         ]).start();
     }, [dot1, dot2, dot3]);
 
@@ -227,113 +260,165 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F2F4F7',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 24,
+        paddingTop: 80,
+        paddingBottom: 40,
     },
 
     bgCircle1: {
         position: 'absolute',
-        width: 260,
-        height: 260,
-        borderRadius: 130,
-        backgroundColor: '#E3EAF5',
-        top: -80,
+        width: 280,
+        height: 280,
+        borderRadius: 140,
+        backgroundColor: '#E2EAF5',
+        top: -90,
         right: -60,
+        opacity: 0.6,
     },
 
     bgCircle2: {
         position: 'absolute',
-        width: 180,
-        height: 180,
-        borderRadius: 90,
-        backgroundColor: '#E9EEF8',
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        backgroundColor: '#E8EDF7',
         bottom: 80,
-        left: -60,
+        left: -70,
+        opacity: 0.6,
     },
 
-    logoWrapper: {
-        width: 130,
-        height: 130,
-        borderRadius: 65,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
+    content: {
         alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        width: '100%',
+        marginTop: 20,
+    },
 
-        shadowColor: '#000',
-        shadowOpacity: 0.12,
-        shadowRadius: 12,
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
+    titleContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
 
-        elevation: 6,
+    mottoContainer: {
+        alignItems: 'center',
+        width: '100%',
     },
 
     logo: {
-        width: 90,
-        height: 90,
+        width: 140,
+        height: 224, // 1:1.6 aspect ratio
+        marginBottom: 20,
     },
 
     schoolName: {
-        color: '#00205B',
+        color: '#1F344A',
         fontSize: 14,
-        fontWeight: '700',
-        letterSpacing: 1.8,
+        fontWeight: '800',
+        letterSpacing: 1.5,
         textAlign: 'center',
+        lineHeight: 20,
     },
 
     schoolSubName: {
-        marginTop: 6,
-        color: '#4A90D9',
+        marginTop: 4,
+        color: '#1F344A',
         fontSize: 11,
         fontWeight: '600',
-        letterSpacing: 2.5,
+        letterSpacing: 2.2,
         textAlign: 'center',
     },
 
-    divider: {
-        width: 220,
-        height: 2,
-        backgroundColor: '#4A90D9',
-        marginVertical: 18,
+    dividerRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 280,
+        marginTop: 16,
+        marginBottom: 10,
+    },
+
+    sanskritRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 280,
+        marginTop: 12,
+        marginBottom: 8,
+    },
+
+    greenDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#3AAB47',
+    },
+
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#D4D3D3',
+        marginHorizontal: 8,
+    },
+
+    lineHalf: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#D4D3D3',
+        marginHorizontal: 8,
     },
 
     motto: {
-        color: '#6B7280',
-        fontSize: 11,
-        letterSpacing: 2,
-        fontWeight: '500',
+        color: '#3AAB47',
+        fontSize: 12,
+        letterSpacing: 2.5,
+        fontWeight: '700',
+        textAlign: 'center',
     },
 
-    systemTag: {
-        marginTop: 35,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 6,
-        borderWidth: 1,
-        borderColor: '#00205B',
-        backgroundColor: '#FFFFFF',
+    sanskritText: {
+        color: '#1F344A',
+        fontSize: 14,
+        fontWeight: '800',
+        textAlign: 'center',
+        letterSpacing: 0.5,
+    },
+
+    tagline: {
+        color: '#3AAB47',
+        fontSize: 12,
+        fontWeight: '600',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        marginTop: 4,
+    },
+
+    footer: {
+        alignItems: 'center',
+        width: '100%',
+        marginTop: 20,
     },
 
     systemText: {
-        color: '#00205B',
+        color: '#1F344A',
         fontSize: 11,
         fontWeight: '700',
-        letterSpacing: 2,
+        letterSpacing: 3,
+        marginBottom: 15,
     },
 
     loadingRow: {
         flexDirection: 'row',
         gap: 8,
+        height: 12,
+        alignItems: 'center',
     },
 
     dot: {
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: '#00205B',
+        backgroundColor: '#1F344A',
     },
 });
 
