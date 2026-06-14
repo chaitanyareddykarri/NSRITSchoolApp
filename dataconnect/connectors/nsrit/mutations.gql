@@ -161,7 +161,17 @@ mutation AssignPrincipal(
   )
 }
 
-mutation CreateClass($branchId: UUID!, $wingId: UUID!, $name: String!, $displayOrder: Int) @auth(level: USER) {
+mutation CreateClass($branchId: UUID!, $wingId: UUID!, $name: String!, $displayOrder: Int) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, ((u.role == 'PRINCIPAL' || u.role == 'principal') && u.branchId == vars.branchId) || u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Class creation access required") {
+      id
+      role
+      branchId
+    }
+  }
   academicClass_insert(
     data: {
       branch: {id: $branchId}
@@ -173,6 +183,7 @@ mutation CreateClass($branchId: UUID!, $wingId: UUID!, $name: String!, $displayO
     }
   )
 }
+
 
 mutation ActivateClass($classId: UUID!) @auth(level: USER) {
   query @redact {
@@ -273,7 +284,17 @@ mutation CreateSection(
   $academicClassId: UUID!
   $name: String!
   $academicYear: Int! = 2026
-) @auth(level: USER) {
+) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, ((u.role == 'PRINCIPAL' || u.role == 'principal') && u.branchId == vars.branchId) || u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Section creation access required") {
+      id
+      role
+      branchId
+    }
+  }
   section_insert(
     data: {
       branch: {id: $branchId}
@@ -287,7 +308,16 @@ mutation CreateSection(
   )
 }
 
-mutation RemoveSection($id: UUID!) @auth(level: USER) {
+mutation RemoveSection($id: UUID!) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'MAIN_ADMIN' || u.role == 'main_admin' || u.role == 'PRINCIPAL' || u.role == 'principal')", message: "Section removal access required") {
+      id
+      role
+    }
+  }
   section_update(id: $id, data: {isActive: false, updatedAt_expr: "request.time"})
 }
 
@@ -301,7 +331,16 @@ mutation CreateUser(
   $staffType: String
   $branchId: UUID
   $wingId: UUID
-) @auth(level: USER) {
+) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'MAIN_ADMIN' || u.role == 'main_admin' || u.role == 'PRINCIPAL' || u.role == 'principal')", message: "User creation access required") {
+      id
+      role
+    }
+  }
   user_insert(
     data: {
       firebaseUID: $firebaseUID
@@ -721,6 +760,15 @@ mutation UploadFeePayment(
   $uploadedById: UUID!
   $remarks: String
 ) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, id: {eq: $uploadedById}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, u.role == 'ACCOUNTANT' || u.role == 'accountant' || u.role == 'PRINCIPAL' || u.role == 'principal' || u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Fee payment upload access required") {
+      id
+      role
+    }
+  }
   payment_insert(
     data: {
       student: {id: $studentId}
@@ -742,7 +790,17 @@ mutation AssignTeacher(
   $sectionId: UUID!
   $subjectName: String
   $isClassTeacher: Boolean!
-) @auth(level: USER) {
+) @auth(level: USER) @transaction {
+  query @redact {
+    users(
+      where: {firebaseUID: {eq_expr: "auth.uid"}, isActive: {eq: true}}
+      limit: 1
+    ) @check(expr: "this.exists(u, ((u.role == 'PRINCIPAL' || u.role == 'principal') && u.branchId == vars.branchId) || u.role == 'MAIN_ADMIN' || u.role == 'main_admin')", message: "Teacher assignment access required") {
+      id
+      role
+      branchId
+    }
+  }
   teacherAssignment_insert(
     data: {
       teacher: {id: $teacherId}
