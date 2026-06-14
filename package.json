@@ -9,8 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "postinstall": "patch-package",
-    "generate-sdk": "firebase dataconnect:sdk:generate"
-
+    "generate-sdk": "firebase dataconnect:sdk:generate",
+    "emulators": "firebase emulators:start"
   },
   "dependencies": {
     "@dataconnect/generated": "file:src/dataconnect-generated",

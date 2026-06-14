@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyBxmRRdxMomZP2eo7AS-UXCXD7-adk40Hk',
   authDomain: '',
@@ -12,12 +14,19 @@ export const apiConfig = {
   timeout: 15000,
 };
 
+// Use the local emulator in development mode
+export const USE_EMULATOR = typeof __DEV__ !== 'undefined' ? __DEV__ : false;
+
+const EMULATOR_HOST = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+
 export const dataConnectConfig = {
   projectId: firebaseConfig.projectId || 'nsrit-school-2b749',
   location: 'asia-south1',
   serviceId: 'nsrit-school-2b749-service',
   connectorId: 'nsrit',
-  apiBaseURL: 'https://firebasedataconnect.googleapis.com/v1',
+  apiBaseURL: USE_EMULATOR
+    ? `http://${EMULATOR_HOST}:9399/v1`
+    : 'https://firebasedataconnect.googleapis.com/v1',
 };
 
 export const authConfig = {
