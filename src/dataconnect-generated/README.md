@@ -238,7 +238,7 @@ export interface GetCurrentUserData {
       branchCode: string;
       name: string;
     } & Branch_Key;
-      isActive: boolean;
+    isActive: boolean;
   } & User_Key)[];
 }
 ```
@@ -363,7 +363,7 @@ export interface GetUserByPhoneData {
       branchCode: string;
       name: string;
     } & Branch_Key;
-      isActive: boolean;
+    isActive: boolean;
   } & User_Key)[];
 }
 ```
@@ -632,23 +632,23 @@ export interface GetStudentsBySectionData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      section: {
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+      classTeacher?: {
         id: UUIDString;
-        name: string;
-        academicYear: number;
-        classTeacher?: {
-          id: UUIDString;
-          fullName: string;
-          phoneNumber: string;
-        } & User_Key;
-      } & Section_Key;
-        parent: {
-          id: UUIDString;
-          fullName: string;
-          fatherName?: string | null;
-          motherName?: string | null;
-          phoneNumber: string;
-        } & Parent_Key;
+        fullName: string;
+        phoneNumber: string;
+      } & User_Key;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+    } & Parent_Key;
   } & Student_Key)[];
 }
 ```
@@ -786,90 +786,90 @@ export interface GetParentChildrenData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      section: {
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+      classTeacher?: {
         id: UUIDString;
-        name: string;
-        academicYear: number;
-        classTeacher?: {
+        fullName: string;
+        phoneNumber: string;
+      } & User_Key;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      countryCode: string;
+      phoneNumber: string;
+      address?: string | null;
+    } & Parent_Key;
+    recentAttendance: ({
+      id: UUIDString;
+      attendanceDate: DateString;
+      status: string;
+      remarks?: string | null;
+    } & Attendance_Key)[];
+    attendance: ({
+      id: UUIDString;
+      attendanceDate: DateString;
+      status: string;
+    } & Attendance_Key)[];
+    fees: ({
+      id: UUIDString;
+      totalFee: number;
+      paidAmount: number;
+      remainingAmount: number;
+      status: string;
+      dueDate: DateString;
+    } & StudentFee_Key)[];
+    parentFeePlans: ({
+      id: UUIDString;
+      academicYear: number;
+      classFeeTemplateId?: UUIDString | null;
+      term1Fee: number;
+      term2Fee: number;
+      term3Fee: number;
+      booksFee: number;
+      transportFee: number;
+      concessionType?: string | null;
+      concessionValue: number;
+      concessionAmount: number;
+      grossAmount: number;
+      totalAmount: number;
+      isActive: boolean;
+      classFeeTemplate?: {
+        id: UUIDString;
+        totalTuitionFee: number;
+        applyToFuture: boolean;
+        status: string;
+      } & AcademicYearFeeTemplate_Key;
+      parentFeeItems: ({
+        id: UUIDString;
+        amount: number;
+        category: {
+          id: UUIDString;
+          name: string;
+        } & FeeCategory_Key;
+      } & StudentFeeItem_Key)[];
+      parentFeePayments: ({
+        id: UUIDString;
+        amount: number;
+        paymentDate: DateString;
+        paymentMode: string;
+        referenceNumber?: string | null;
+        receiptNumber: string;
+        status: string;
+        reversedAt?: TimestampString | null;
+        reverseReason?: string | null;
+        remarks?: string | null;
+        collectedBy: {
           id: UUIDString;
           fullName: string;
-          phoneNumber: string;
         } & User_Key;
-      } & Section_Key;
-        parent: {
-          id: UUIDString;
-          fullName: string;
-          fatherName?: string | null;
-          motherName?: string | null;
-          countryCode: string;
-          phoneNumber: string;
-          address?: string | null;
-        } & Parent_Key;
-          recentAttendance: ({
-            id: UUIDString;
-            attendanceDate: DateString;
-            status: string;
-            remarks?: string | null;
-          } & Attendance_Key)[];
-            attendance: ({
-              id: UUIDString;
-              attendanceDate: DateString;
-              status: string;
-            } & Attendance_Key)[];
-              fees: ({
-                id: UUIDString;
-                totalFee: number;
-                paidAmount: number;
-                remainingAmount: number;
-                status: string;
-                dueDate: DateString;
-              } & StudentFee_Key)[];
-                parentFeePlans: ({
-                  id: UUIDString;
-                  academicYear: number;
-                  classFeeTemplateId?: UUIDString | null;
-                  term1Fee: number;
-                  term2Fee: number;
-                  term3Fee: number;
-                  booksFee: number;
-                  transportFee: number;
-                  concessionType?: string | null;
-                  concessionValue: number;
-                  concessionAmount: number;
-                  grossAmount: number;
-                  totalAmount: number;
-                  isActive: boolean;
-                  classFeeTemplate?: {
-                    id: UUIDString;
-                    totalTuitionFee: number;
-                    applyToFuture: boolean;
-                    status: string;
-                  } & AcademicYearFeeTemplate_Key;
-                    parentFeeItems: ({
-                      id: UUIDString;
-                      amount: number;
-                      category: {
-                        id: UUIDString;
-                        name: string;
-                      } & FeeCategory_Key;
-                    } & StudentFeeItem_Key)[];
-                      parentFeePayments: ({
-                        id: UUIDString;
-                        amount: number;
-                        paymentDate: DateString;
-                        paymentMode: string;
-                        referenceNumber?: string | null;
-                        receiptNumber: string;
-                        status: string;
-                        reversedAt?: TimestampString | null;
-                        reverseReason?: string | null;
-                        remarks?: string | null;
-                        collectedBy: {
-                          id: UUIDString;
-                          fullName: string;
-                        } & User_Key;
-                      } & FeePayment_Key)[];
-                } & StudentFeePlan_Key)[];
+      } & FeePayment_Key)[];
+    } & StudentFeePlan_Key)[];
   } & Student_Key)[];
 }
 ```
@@ -1245,14 +1245,14 @@ export interface GetBranchesData {
       role: string;
       isActive: boolean;
     } & User_Key;
-      principal?: {
-        id: UUIDString;
-        fullName: string;
-        phoneNumber: string;
-        role: string;
-        isActive: boolean;
-      } & User_Key;
-        isActive: boolean;
+    principal?: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+      role: string;
+      isActive: boolean;
+    } & User_Key;
+    isActive: boolean;
   } & Branch_Key)[];
 }
 ```
@@ -1391,77 +1391,77 @@ export interface GetBranchDetailsData {
       role: string;
       isActive: boolean;
     } & User_Key;
-      principal?: {
-        id: UUIDString;
-        fullName: string;
-        phoneNumber: string;
-        role: string;
-        isActive: boolean;
-      } & User_Key;
-  } & Branch_Key;
-    academicClasses: ({
+    principal?: {
       id: UUIDString;
-      branchId: UUIDString;
-      wingId: UUIDString;
-      name: string;
-      displayOrder?: number | null;
+      fullName: string;
+      phoneNumber: string;
+      role: string;
       isActive: boolean;
-    } & AcademicClass_Key)[];
-      sections: ({
-        id: UUIDString;
-        branchId: UUIDString;
-        wingId: UUIDString;
-        academicClassId: UUIDString;
-        name: string;
-        isActive: boolean;
-        academicClass: {
-          id: UUIDString;
-          name: string;
-        } & AcademicClass_Key;
-      } & Section_Key)[];
-        students: ({
-          id: UUIDString;
-          studentId: string;
-          fullName: string;
-          academicClassId: UUIDString;
-          sectionId: UUIDString;
-          isActive: boolean;
-        } & Student_Key)[];
-          users: ({
-            id: UUIDString;
-            fullName: string;
-            phoneNumber: string;
-            role: string;
-            employeeId?: string | null;
-            staffType?: string | null;
-            branchId?: UUIDString | null;
-            isActive: boolean;
-          } & User_Key)[];
-            teacherAssignments: ({
-              id: UUIDString;
-              teacherId: UUIDString;
-              sectionId: UUIDString;
-              isClassTeacher: boolean;
-              teacher: {
-                id: UUIDString;
-                fullName: string;
-                phoneNumber: string;
-                role: string;
-              } & User_Key;
-            } & TeacherAssignment_Key)[];
-              attendances: ({
-                id: UUIDString;
-                status: string;
-                attendanceDate: DateString;
-              } & Attendance_Key)[];
-                studentFees: ({
-                  id: UUIDString;
-                  totalFee: number;
-                  paidAmount: number;
-                  remainingAmount: number;
-                  status: string;
-                  dueDate: DateString;
-                } & StudentFee_Key)[];
+    } & User_Key;
+  } & Branch_Key;
+  academicClasses: ({
+    id: UUIDString;
+    branchId: UUIDString;
+    wingId: UUIDString;
+    name: string;
+    displayOrder?: number | null;
+    isActive: boolean;
+  } & AcademicClass_Key)[];
+  sections: ({
+    id: UUIDString;
+    branchId: UUIDString;
+    wingId: UUIDString;
+    academicClassId: UUIDString;
+    name: string;
+    isActive: boolean;
+    academicClass: {
+      id: UUIDString;
+      name: string;
+    } & AcademicClass_Key;
+  } & Section_Key)[];
+  students: ({
+    id: UUIDString;
+    studentId: string;
+    fullName: string;
+    academicClassId: UUIDString;
+    sectionId: UUIDString;
+    isActive: boolean;
+  } & Student_Key)[];
+  users: ({
+    id: UUIDString;
+    fullName: string;
+    phoneNumber: string;
+    role: string;
+    employeeId?: string | null;
+    staffType?: string | null;
+    branchId?: UUIDString | null;
+    isActive: boolean;
+  } & User_Key)[];
+  teacherAssignments: ({
+    id: UUIDString;
+    teacherId: UUIDString;
+    sectionId: UUIDString;
+    isClassTeacher: boolean;
+    teacher: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+      role: string;
+    } & User_Key;
+  } & TeacherAssignment_Key)[];
+  attendances: ({
+    id: UUIDString;
+    status: string;
+    attendanceDate: DateString;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    totalFee: number;
+    paidAmount: number;
+    remainingAmount: number;
+    status: string;
+    dueDate: DateString;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetBranchDetails`'s action shortcut function
@@ -1728,11 +1728,11 @@ export interface GetAssignmentConflictsData {
     name: string;
     branchCode: string;
   } & Branch_Key)[];
-    principalBranches: ({
-      id: UUIDString;
-      name: string;
-      branchCode: string;
-    } & Branch_Key)[];
+  principalBranches: ({
+    id: UUIDString;
+    name: string;
+    branchCode: string;
+  } & Branch_Key)[];
 }
 ```
 ### Using `GetAssignmentConflicts`'s action shortcut function
@@ -1859,45 +1859,45 @@ export interface GetGlobalClassesData {
       status: string;
       isActive: boolean;
     } & Branch_Key;
-      academicClass: {
-        id: UUIDString;
-        name: string;
-        displayOrder?: number | null;
-      } & AcademicClass_Key;
-  } & Section_Key)[];
-    students: ({
+    academicClass: {
       id: UUIDString;
-      branchId: UUIDString;
-      academicClassId: UUIDString;
+      name: string;
+      displayOrder?: number | null;
+    } & AcademicClass_Key;
+  } & Section_Key)[];
+  students: ({
+    id: UUIDString;
+    branchId: UUIDString;
+    academicClassId: UUIDString;
+    sectionId: UUIDString;
+    isActive: boolean;
+  } & Student_Key)[];
+  teacherAssignments: ({
+    id: UUIDString;
+    teacherId: UUIDString;
+    sectionId: UUIDString;
+    isClassTeacher: boolean;
+    teacher: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+      role: string;
+    } & User_Key;
+  } & TeacherAssignment_Key)[];
+  attendances: ({
+    id: UUIDString;
+    sectionId: UUIDString;
+    status: string;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    paidAmount: number;
+    remainingAmount: number;
+    student: {
+      id: UUIDString;
       sectionId: UUIDString;
-      isActive: boolean;
-    } & Student_Key)[];
-      teacherAssignments: ({
-        id: UUIDString;
-        teacherId: UUIDString;
-        sectionId: UUIDString;
-        isClassTeacher: boolean;
-        teacher: {
-          id: UUIDString;
-          fullName: string;
-          phoneNumber: string;
-          role: string;
-        } & User_Key;
-      } & TeacherAssignment_Key)[];
-        attendances: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          status: string;
-        } & Attendance_Key)[];
-          studentFees: ({
-            id: UUIDString;
-            paidAmount: number;
-            remainingAmount: number;
-            student: {
-              id: UUIDString;
-              sectionId: UUIDString;
-            } & Student_Key;
-          } & StudentFee_Key)[];
+    } & Student_Key;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetGlobalClasses`'s action shortcut function
@@ -2039,49 +2039,49 @@ export interface GetClassDetailsData {
       name: string;
       branchCode: string;
     } & Branch_Key;
-      academicClass: {
-        id: UUIDString;
-        name: string;
-        displayOrder?: number | null;
-      } & AcademicClass_Key;
-  } & Section_Key;
-    students: ({
+    academicClass: {
       id: UUIDString;
-      studentId: string;
+      name: string;
+      displayOrder?: number | null;
+    } & AcademicClass_Key;
+  } & Section_Key;
+  students: ({
+    id: UUIDString;
+    studentId: string;
+    fullName: string;
+    gender?: string | null;
+    phoneNumber?: string | null;
+    rollNumber?: string | null;
+    isActive: boolean;
+  } & Student_Key)[];
+  teacherAssignments: ({
+    id: UUIDString;
+    teacherId: UUIDString;
+    subjectName?: string | null;
+    isClassTeacher: boolean;
+    teacher: {
+      id: UUIDString;
       fullName: string;
-      gender?: string | null;
-      phoneNumber?: string | null;
-      rollNumber?: string | null;
-      isActive: boolean;
-    } & Student_Key)[];
-      teacherAssignments: ({
-        id: UUIDString;
-        teacherId: UUIDString;
-        subjectName?: string | null;
-        isClassTeacher: boolean;
-        teacher: {
-          id: UUIDString;
-          fullName: string;
-          phoneNumber: string;
-          role: string;
-        } & User_Key;
-      } & TeacherAssignment_Key)[];
-        attendances: ({
-          id: UUIDString;
-          studentId: UUIDString;
-          attendanceDate: DateString;
-          status: string;
-          remarks?: string | null;
-        } & Attendance_Key)[];
-          studentFees: ({
-            id: UUIDString;
-            studentId: UUIDString;
-            totalFee: number;
-            paidAmount: number;
-            remainingAmount: number;
-            status: string;
-            dueDate: DateString;
-          } & StudentFee_Key)[];
+      phoneNumber: string;
+      role: string;
+    } & User_Key;
+  } & TeacherAssignment_Key)[];
+  attendances: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    attendanceDate: DateString;
+    status: string;
+    remarks?: string | null;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    totalFee: number;
+    paidAmount: number;
+    remainingAmount: number;
+    status: string;
+    dueDate: DateString;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetClassDetails`'s action shortcut function
@@ -2227,35 +2227,35 @@ export interface GetGlobalStudentsData {
       name: string;
       branchCode: string;
     } & Branch_Key;
-      academicClass: {
-        id: UUIDString;
-        name: string;
-      } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-        } & Section_Key;
-          parent: {
-            id: UUIDString;
-            fullName: string;
-            fatherName?: string | null;
-            motherName?: string | null;
-            phoneNumber: string;
-            email?: string | null;
-          } & Parent_Key;
-  } & Student_Key)[];
-    attendances: ({
+    academicClass: {
       id: UUIDString;
-      studentId: UUIDString;
-      status: string;
-    } & Attendance_Key)[];
-      studentFees: ({
-        id: UUIDString;
-        studentId: UUIDString;
-        paidAmount: number;
-        remainingAmount: number;
-        status: string;
-      } & StudentFee_Key)[];
+      name: string;
+    } & AcademicClass_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+      email?: string | null;
+    } & Parent_Key;
+  } & Student_Key)[];
+  attendances: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    status: string;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    paidAmount: number;
+    remainingAmount: number;
+    status: string;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetGlobalStudents`'s action shortcut function
@@ -2403,49 +2403,49 @@ export interface GetStudentProfileData {
       name: string;
       branchCode: string;
     } & Branch_Key;
-      academicClass: {
-        id: UUIDString;
-        name: string;
-      } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-        } & Section_Key;
-          parent: {
-            id: UUIDString;
-            fullName: string;
-            fatherName?: string | null;
-            motherName?: string | null;
-            countryCode: string;
-            phoneNumber: string;
-            email?: string | null;
-            address?: string | null;
-          } & Parent_Key;
-  } & Student_Key;
-    attendances: ({
+    academicClass: {
       id: UUIDString;
-      attendanceDate: DateString;
-      status: string;
-      remarks?: string | null;
-    } & Attendance_Key)[];
-      studentFees: ({
-        id: UUIDString;
-        totalFee: number;
-        paidAmount: number;
-        remainingAmount: number;
-        status: string;
-        dueDate: DateString;
-      } & StudentFee_Key)[];
-        payments: ({
-          id: UUIDString;
-          studentFeeId: UUIDString;
-          amount: number;
-          paymentMode: string;
-          receiptNumber?: string | null;
-          uploadedById: UUIDString;
-          remarks?: string | null;
-          paidAt: TimestampString;
-        } & Payment_Key)[];
+      name: string;
+    } & AcademicClass_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      countryCode: string;
+      phoneNumber: string;
+      email?: string | null;
+      address?: string | null;
+    } & Parent_Key;
+  } & Student_Key;
+  attendances: ({
+    id: UUIDString;
+    attendanceDate: DateString;
+    status: string;
+    remarks?: string | null;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    totalFee: number;
+    paidAmount: number;
+    remainingAmount: number;
+    status: string;
+    dueDate: DateString;
+  } & StudentFee_Key)[];
+  payments: ({
+    id: UUIDString;
+    studentFeeId: UUIDString;
+    amount: number;
+    paymentMode: string;
+    receiptNumber?: string | null;
+    uploadedById: UUIDString;
+    remarks?: string | null;
+    paidAt: TimestampString;
+  } & Payment_Key)[];
 }
 ```
 ### Using `GetStudentProfile`'s action shortcut function
@@ -2688,15 +2688,15 @@ export interface GetStudentFeeHistoryData {
     status: string;
     dueDate: DateString;
   } & StudentFee_Key)[];
-    payments: ({
-      id: UUIDString;
-      studentFeeId: UUIDString;
-      amount: number;
-      paymentMode: string;
-      receiptNumber?: string | null;
-      remarks?: string | null;
-      paidAt: TimestampString;
-    } & Payment_Key)[];
+  payments: ({
+    id: UUIDString;
+    studentFeeId: UUIDString;
+    amount: number;
+    paymentMode: string;
+    receiptNumber?: string | null;
+    remarks?: string | null;
+    paidAt: TimestampString;
+  } & Payment_Key)[];
 }
 ```
 ### Using `GetStudentFeeHistory`'s action shortcut function
@@ -2808,29 +2808,29 @@ export interface GetDashboardStatisticsData {
     isActive: boolean;
     status: string;
   } & Branch_Key)[];
-    academicClasses: ({
-      id: UUIDString;
-      branchId: UUIDString;
-      isActive: boolean;
-    } & AcademicClass_Key)[];
-      users: ({
-        id: UUIDString;
-        branchId?: UUIDString | null;
-        role: string;
-      } & User_Key)[];
-        students: ({
-          id: UUIDString;
-          branchId: UUIDString;
-        } & Student_Key)[];
-          attendances: ({
-            id: UUIDString;
-            status: string;
-            attendanceDate: DateString;
-          } & Attendance_Key)[];
-            studentFees: ({
-              id: UUIDString;
-              remainingAmount: number;
-            } & StudentFee_Key)[];
+  academicClasses: ({
+    id: UUIDString;
+    branchId: UUIDString;
+    isActive: boolean;
+  } & AcademicClass_Key)[];
+  users: ({
+    id: UUIDString;
+    branchId?: UUIDString | null;
+    role: string;
+  } & User_Key)[];
+  students: ({
+    id: UUIDString;
+    branchId: UUIDString;
+  } & Student_Key)[];
+  attendances: ({
+    id: UUIDString;
+    status: string;
+    attendanceDate: DateString;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    remainingAmount: number;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetDashboardStatistics`'s action shortcut function
@@ -3433,22 +3433,22 @@ export interface SearchStudentsData {
         name: string;
       };
     } & AcademicClass_Key;
-      section: {
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+      classTeacher?: {
         id: UUIDString;
-        name: string;
-        academicYear: number;
-        classTeacher?: {
-          id: UUIDString;
-          fullName: string;
-          phoneNumber: string;
-        } & User_Key;
-      } & Section_Key;
-        parent: {
-          id: UUIDString;
-          fatherName?: string | null;
-          motherName?: string | null;
-          phoneNumber: string;
-        } & Parent_Key;
+        fullName: string;
+        phoneNumber: string;
+      } & User_Key;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+    } & Parent_Key;
   } & Student_Key)[];
 }
 ```
@@ -3713,127 +3713,127 @@ export interface GetStudentDetailsData {
       name: string;
       branchCode: string;
     } & Branch_Key;
+    academicClass: {
+      id: UUIDString;
+      name: string;
+      wing: {
+        id: UUIDString;
+        code: string;
+        name: string;
+      } & Wing_Key;
+    } & AcademicClass_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+      classTeacher?: {
+        id: UUIDString;
+        fullName: string;
+        phoneNumber: string;
+      } & User_Key;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      countryCode: string;
+      phoneNumber: string;
+      email?: string | null;
+      address?: string | null;
+    } & Parent_Key;
+  } & Student_Key;
+  attendances: ({
+    id: UUIDString;
+    attendanceDate: DateString;
+    status: string;
+    remarks?: string | null;
+    markedBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
+    editedBy?: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    totalFee: number;
+    paidAmount: number;
+    remainingAmount: number;
+    status: string;
+    dueDate: DateString;
+  } & StudentFee_Key)[];
+  studentDetailFeePlans: ({
+    id: UUIDString;
+    academicYear: number;
+    totalAmount: number;
+    isActive: boolean;
+    detailFeeItems: ({
+      id: UUIDString;
+      amount: number;
+      category: {
+        id: UUIDString;
+        name: string;
+      } & FeeCategory_Key;
+    } & StudentFeeItem_Key)[];
+    detailFeePayments: ({
+      id: UUIDString;
+      amount: number;
+      paymentDate: DateString;
+      paymentMode: string;
+      receiptNumber: string;
+    } & FeePayment_Key)[];
+  } & StudentFeePlan_Key)[];
+  studentSectionHistories: ({
+    id: UUIDString;
+    changedAt: TimestampString;
+    oldSection: {
+      id: UUIDString;
+      name: string;
       academicClass: {
         id: UUIDString;
         name: string;
-        wing: {
-          id: UUIDString;
-          code: string;
-          name: string;
-        } & Wing_Key;
       } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-          academicYear: number;
-          classTeacher?: {
-            id: UUIDString;
-            fullName: string;
-            phoneNumber: string;
-          } & User_Key;
-        } & Section_Key;
-          parent: {
-            id: UUIDString;
-            fullName: string;
-            fatherName?: string | null;
-            motherName?: string | null;
-            countryCode: string;
-            phoneNumber: string;
-            email?: string | null;
-            address?: string | null;
-          } & Parent_Key;
-  } & Student_Key;
-    attendances: ({
+    } & Section_Key;
+    newSection: {
       id: UUIDString;
-      attendanceDate: DateString;
-      status: string;
-      remarks?: string | null;
-      markedBy: {
+      name: string;
+      academicClass: {
         id: UUIDString;
-        fullName: string;
-      } & User_Key;
-        editedBy?: {
-          id: UUIDString;
-          fullName: string;
-        } & User_Key;
-    } & Attendance_Key)[];
-      studentFees: ({
-        id: UUIDString;
-        totalFee: number;
-        paidAmount: number;
-        remainingAmount: number;
-        status: string;
-        dueDate: DateString;
-      } & StudentFee_Key)[];
-        studentDetailFeePlans: ({
-          id: UUIDString;
-          academicYear: number;
-          totalAmount: number;
-          isActive: boolean;
-          detailFeeItems: ({
-            id: UUIDString;
-            amount: number;
-            category: {
-              id: UUIDString;
-              name: string;
-            } & FeeCategory_Key;
-          } & StudentFeeItem_Key)[];
-            detailFeePayments: ({
-              id: UUIDString;
-              amount: number;
-              paymentDate: DateString;
-              paymentMode: string;
-              receiptNumber: string;
-            } & FeePayment_Key)[];
-        } & StudentFeePlan_Key)[];
-          studentSectionHistories: ({
-            id: UUIDString;
-            changedAt: TimestampString;
-            oldSection: {
-              id: UUIDString;
-              name: string;
-              academicClass: {
-                id: UUIDString;
-                name: string;
-              } & AcademicClass_Key;
-            } & Section_Key;
-              newSection: {
-                id: UUIDString;
-                name: string;
-                academicClass: {
-                  id: UUIDString;
-                  name: string;
-                } & AcademicClass_Key;
-              } & Section_Key;
-                changedBy: {
-                  id: UUIDString;
-                  fullName: string;
-                } & User_Key;
-          } & StudentSectionHistory_Key)[];
-            studentPromotionHistories: ({
-              id: UUIDString;
-              promotedAt: TimestampString;
-              fromClass: {
-                id: UUIDString;
-                name: string;
-              } & AcademicClass_Key;
-                toClass: {
-                  id: UUIDString;
-                  name: string;
-                } & AcademicClass_Key;
-                  fromSection: {
-                    id: UUIDString;
-                    name: string;
-                  } & Section_Key;
-                    toSection: {
-                      id: UUIDString;
-                      name: string;
-                    } & Section_Key;
-                      promotedBy: {
-                        id: UUIDString;
-                        fullName: string;
-                      } & User_Key;
-            } & StudentPromotionHistory_Key)[];
+        name: string;
+      } & AcademicClass_Key;
+    } & Section_Key;
+    changedBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
+  } & StudentSectionHistory_Key)[];
+  studentPromotionHistories: ({
+    id: UUIDString;
+    promotedAt: TimestampString;
+    fromClass: {
+      id: UUIDString;
+      name: string;
+    } & AcademicClass_Key;
+    toClass: {
+      id: UUIDString;
+      name: string;
+    } & AcademicClass_Key;
+    fromSection: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    toSection: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    promotedBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
+  } & StudentPromotionHistory_Key)[];
 }
 ```
 ### Using `GetStudentDetails`'s action shortcut function
@@ -4000,18 +4000,18 @@ export interface GetStudentsData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      section: {
-        id: UUIDString;
-        name: string;
-        academicYear: number;
-      } & Section_Key;
-        parent: {
-          id: UUIDString;
-          fullName: string;
-          fatherName?: string | null;
-          motherName?: string | null;
-          phoneNumber: string;
-        } & Parent_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+    } & Parent_Key;
   } & Student_Key)[];
 }
 ```
@@ -4752,25 +4752,25 @@ export interface GetAttendanceByBranchData {
       fullName: string;
       parentId: UUIDString;
     } & Student_Key;
-      academicClass: {
+    academicClass: {
+      id: UUIDString;
+      name: string;
+      wing: {
         id: UUIDString;
+        code: string;
         name: string;
-        wing: {
-          id: UUIDString;
-          code: string;
-          name: string;
-        } & Wing_Key;
-      } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-          academicYear: number;
-        } & Section_Key;
-          markedBy: {
-            id: UUIDString;
-            fullName: string;
-            role: string;
-          } & User_Key;
+      } & Wing_Key;
+    } & AcademicClass_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+    } & Section_Key;
+    markedBy: {
+      id: UUIDString;
+      fullName: string;
+      role: string;
+    } & User_Key;
   } & Attendance_Key)[];
 }
 ```
@@ -4899,17 +4899,17 @@ export interface GetFeeDetailsData {
     dueDate: DateString;
     updatedAt: TimestampString;
   } & StudentFee_Key)[];
-    payments: ({
-      id: UUIDString;
-      studentId: UUIDString;
-      studentFeeId: UUIDString;
-      amount: number;
-      paymentMode: string;
-      receiptNumber?: string | null;
-      uploadedById: UUIDString;
-      remarks?: string | null;
-      paidAt: TimestampString;
-    } & Payment_Key)[];
+  payments: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    studentFeeId: UUIDString;
+    amount: number;
+    paymentMode: string;
+    receiptNumber?: string | null;
+    uploadedById: UUIDString;
+    remarks?: string | null;
+    paidAt: TimestampString;
+  } & Payment_Key)[];
 }
 ```
 ### Using `GetFeeDetails`'s action shortcut function
@@ -5540,15 +5540,15 @@ export interface GetBranchAnalyticsData {
   students: ({
     id: UUIDString;
   } & Student_Key)[];
-    attendances: ({
-      id: UUIDString;
-      status: string;
-    } & Attendance_Key)[];
-      studentFees: ({
-        id: UUIDString;
-        paidAmount: number;
-        remainingAmount: number;
-      } & StudentFee_Key)[];
+  attendances: ({
+    id: UUIDString;
+    status: string;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    paidAmount: number;
+    remainingAmount: number;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetBranchAnalytics`'s action shortcut function
@@ -5668,15 +5668,15 @@ export interface GetClassAnalyticsData {
   students: ({
     id: UUIDString;
   } & Student_Key)[];
-    attendances: ({
-      id: UUIDString;
-      status: string;
-    } & Attendance_Key)[];
-      studentFees: ({
-        id: UUIDString;
-        paidAmount: number;
-        remainingAmount: number;
-      } & StudentFee_Key)[];
+  attendances: ({
+    id: UUIDString;
+    status: string;
+  } & Attendance_Key)[];
+  studentFees: ({
+    id: UUIDString;
+    paidAmount: number;
+    remainingAmount: number;
+  } & StudentFee_Key)[];
 }
 ```
 ### Using `GetClassAnalytics`'s action shortcut function
@@ -5805,11 +5805,11 @@ export interface GetAcademicClassesData {
       name: string;
       code: string;
     } & Wing_Key;
-      sortOrder: number;
-      displayOrder?: number | null;
-      isActive: boolean;
-      activatedById?: UUIDString | null;
-      activatedAt?: TimestampString | null;
+    sortOrder: number;
+    displayOrder?: number | null;
+    isActive: boolean;
+    activatedById?: UUIDString | null;
+    activatedAt?: TimestampString | null;
   } & AcademicClass_Key)[];
 }
 ```
@@ -5937,9 +5937,9 @@ export interface GetActiveAcademicClassesData {
       name: string;
       code: string;
     } & Wing_Key;
-      sortOrder: number;
-      displayOrder?: number | null;
-      isActive: boolean;
+    sortOrder: number;
+    displayOrder?: number | null;
+    isActive: boolean;
   } & AcademicClass_Key)[];
 }
 ```
@@ -6068,9 +6068,9 @@ export interface GetClassesByWingCodeData {
       name: string;
       code: string;
     } & Wing_Key;
-      sortOrder: number;
-      displayOrder?: number | null;
-      isActive: boolean;
+    sortOrder: number;
+    displayOrder?: number | null;
+    isActive: boolean;
   } & AcademicClass_Key)[];
 }
 ```
@@ -6584,47 +6584,47 @@ export interface GetSectionsData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      classTeacher?: {
+    classTeacher?: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+      employeeId?: string | null;
+      staffType?: string | null;
+      role: string;
+    } & User_Key;
+    classTeacherAssignments: ({
+      id: UUIDString;
+      teacherId: UUIDString;
+      sectionId: UUIDString;
+      createdAt: TimestampString;
+      updatedAt: TimestampString;
+      assignedBy?: {
         id: UUIDString;
         fullName: string;
-        phoneNumber: string;
-        employeeId?: string | null;
-        staffType?: string | null;
         role: string;
       } & User_Key;
-        classTeacherAssignments: ({
-          id: UUIDString;
-          teacherId: UUIDString;
-          sectionId: UUIDString;
-          createdAt: TimestampString;
-          updatedAt: TimestampString;
-          assignedBy?: {
-            id: UUIDString;
-            fullName: string;
-            role: string;
-          } & User_Key;
-            teacher: {
-              id: UUIDString;
-              employeeId: string;
-              staffType: string;
-              user: {
-                id: UUIDString;
-                fullName: string;
-                phoneNumber: string;
-                employeeId?: string | null;
-              } & User_Key;
-            } & Teacher_Key;
-        } & TeacherSectionAssignment_Key)[];
-  } & Section_Key)[];
-    students: ({
-      id: UUIDString;
-      sectionId: UUIDString;
-    } & Student_Key)[];
-      attendances: ({
+      teacher: {
         id: UUIDString;
-        sectionId: UUIDString;
-        status: string;
-      } & Attendance_Key)[];
+        employeeId: string;
+        staffType: string;
+        user: {
+          id: UUIDString;
+          fullName: string;
+          phoneNumber: string;
+          employeeId?: string | null;
+        } & User_Key;
+      } & Teacher_Key;
+    } & TeacherSectionAssignment_Key)[];
+  } & Section_Key)[];
+  students: ({
+    id: UUIDString;
+    sectionId: UUIDString;
+  } & Student_Key)[];
+  attendances: ({
+    id: UUIDString;
+    sectionId: UUIDString;
+    status: string;
+  } & Attendance_Key)[];
 }
 ```
 ### Using `GetSections`'s action shortcut function
@@ -6874,27 +6874,27 @@ export interface GetPrincipalDashboardData {
   students: ({
     id: UUIDString;
   } & Student_Key)[];
-    teachers: ({
+  teachers: ({
+    id: UUIDString;
+  } & User_Key)[];
+  coordinators: ({
+    id: UUIDString;
+  } & Coordinator_Key)[];
+  sections: ({
+    id: UUIDString;
+  } & Section_Key)[];
+  pendingPromotions: ({
+    id: UUIDString;
+    academicClass: {
       id: UUIDString;
-    } & User_Key)[];
-      coordinators: ({
+      name: string;
+      wing: {
         id: UUIDString;
-      } & Coordinator_Key)[];
-        sections: ({
-          id: UUIDString;
-        } & Section_Key)[];
-          pendingPromotions: ({
-            id: UUIDString;
-            academicClass: {
-              id: UUIDString;
-              name: string;
-              wing: {
-                id: UUIDString;
-                code: string;
-                name: string;
-              } & Wing_Key;
-            } & AcademicClass_Key;
-          } & Student_Key)[];
+        code: string;
+        name: string;
+      } & Wing_Key;
+    } & AcademicClass_Key;
+  } & Student_Key)[];
 }
 ```
 ### Using `GetPrincipalDashboard`'s action shortcut function
@@ -7041,11 +7041,11 @@ export interface GetStudentsByWingData {
         name: string;
       };
     } & AcademicClass_Key;
-      section: {
-        id: UUIDString;
-        name: string;
-        academicYear: number;
-      } & Section_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+    } & Section_Key;
   } & Student_Key)[];
 }
 ```
@@ -7183,17 +7183,17 @@ export interface GetCoordinatorStudentsByWingData {
         name: string;
       };
     } & AcademicClass_Key;
-      section: {
-        id: UUIDString;
-        name: string;
-        academicYear: number;
-      } & Section_Key;
-        parent: {
-          id: UUIDString;
-          fatherName?: string | null;
-          motherName?: string | null;
-          phoneNumber: string;
-        } & Parent_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+      academicYear: number;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+    } & Parent_Key;
   } & Student_Key)[];
 }
 ```
@@ -7323,26 +7323,26 @@ export interface GetPromotionHistoryData {
       studentId: string;
       fullName: string;
     } & Student_Key;
-      fromClass: {
-        id: UUIDString;
-        name: string;
-      } & AcademicClass_Key;
-        toClass: {
-          id: UUIDString;
-          name: string;
-        } & AcademicClass_Key;
-          fromSection: {
-            id: UUIDString;
-            name: string;
-          } & Section_Key;
-            toSection: {
-              id: UUIDString;
-              name: string;
-            } & Section_Key;
-              promotedBy: {
-                id: UUIDString;
-                fullName: string;
-              } & User_Key;
+    fromClass: {
+      id: UUIDString;
+      name: string;
+    } & AcademicClass_Key;
+    toClass: {
+      id: UUIDString;
+      name: string;
+    } & AcademicClass_Key;
+    fromSection: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    toSection: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    promotedBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
   } & StudentPromotionHistory_Key)[];
 }
 ```
@@ -7828,33 +7828,33 @@ export interface GetTeachersData {
       staffType?: string | null;
       isActive: boolean;
     } & User_Key;
-      teacherSubjects_on_teacher: ({
+    teacherSubjects_on_teacher: ({
+      id: UUIDString;
+      subject: {
         id: UUIDString;
-        subject: {
+        name: string;
+        code: string;
+        status: string;
+      } & Subject_Key;
+    } & TeacherSubject_Key)[];
+    teacherSectionAssignments_on_teacher: ({
+      id: UUIDString;
+      sectionId: UUIDString;
+      isClassTeacher: boolean;
+      section: {
+        id: UUIDString;
+        name: string;
+        academicYear: number;
+        academicClass: {
           id: UUIDString;
           name: string;
-          code: string;
-          status: string;
-        } & Subject_Key;
-      } & TeacherSubject_Key)[];
-        teacherSectionAssignments_on_teacher: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          isClassTeacher: boolean;
-          section: {
-            id: UUIDString;
+          wing: {
+            code: string;
             name: string;
-            academicYear: number;
-            academicClass: {
-              id: UUIDString;
-              name: string;
-              wing: {
-                code: string;
-                name: string;
-              };
-            } & AcademicClass_Key;
-          } & Section_Key;
-        } & TeacherSectionAssignment_Key)[];
+          };
+        } & AcademicClass_Key;
+      } & Section_Key;
+    } & TeacherSectionAssignment_Key)[];
   } & Teacher_Key)[];
 }
 ```
@@ -8110,33 +8110,33 @@ export interface GetTeachersByWingData {
       staffType?: string | null;
       isActive: boolean;
     } & User_Key;
-      teacherSubjects_on_teacher: ({
+    teacherSubjects_on_teacher: ({
+      id: UUIDString;
+      subject: {
         id: UUIDString;
-        subject: {
+        name: string;
+        code: string;
+        status: string;
+      } & Subject_Key;
+    } & TeacherSubject_Key)[];
+    teacherSectionAssignments_on_teacher: ({
+      id: UUIDString;
+      sectionId: UUIDString;
+      isClassTeacher: boolean;
+      section: {
+        id: UUIDString;
+        name: string;
+        academicYear: number;
+        academicClass: {
           id: UUIDString;
           name: string;
-          code: string;
-          status: string;
-        } & Subject_Key;
-      } & TeacherSubject_Key)[];
-        teacherSectionAssignments_on_teacher: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          isClassTeacher: boolean;
-          section: {
-            id: UUIDString;
+          wing: {
+            code: string;
             name: string;
-            academicYear: number;
-            academicClass: {
-              id: UUIDString;
-              name: string;
-              wing: {
-                code: string;
-                name: string;
-              };
-            } & AcademicClass_Key;
-          } & Section_Key;
-        } & TeacherSectionAssignment_Key)[];
+          };
+        } & AcademicClass_Key;
+      } & Section_Key;
+    } & TeacherSectionAssignment_Key)[];
   } & Teacher_Key)[];
 }
 ```
@@ -8277,33 +8277,33 @@ export interface GetCoordinatorTeachersByWingData {
       staffType?: string | null;
       isActive: boolean;
     } & User_Key;
-      teacherSubjects_on_teacher: ({
+    teacherSubjects_on_teacher: ({
+      id: UUIDString;
+      subject: {
         id: UUIDString;
-        subject: {
+        name: string;
+        code: string;
+        status: string;
+      } & Subject_Key;
+    } & TeacherSubject_Key)[];
+    teacherSectionAssignments_on_teacher: ({
+      id: UUIDString;
+      sectionId: UUIDString;
+      isClassTeacher: boolean;
+      section: {
+        id: UUIDString;
+        name: string;
+        academicYear: number;
+        academicClass: {
           id: UUIDString;
           name: string;
-          code: string;
-          status: string;
-        } & Subject_Key;
-      } & TeacherSubject_Key)[];
-        teacherSectionAssignments_on_teacher: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          isClassTeacher: boolean;
-          section: {
-            id: UUIDString;
+          wing: {
+            code: string;
             name: string;
-            academicYear: number;
-            academicClass: {
-              id: UUIDString;
-              name: string;
-              wing: {
-                code: string;
-                name: string;
-              };
-            } & AcademicClass_Key;
-          } & Section_Key;
-        } & TeacherSectionAssignment_Key)[];
+          };
+        } & AcademicClass_Key;
+      } & Section_Key;
+    } & TeacherSectionAssignment_Key)[];
   } & Teacher_Key)[];
 }
 ```
@@ -8448,69 +8448,69 @@ export interface GetTeacherProfileData {
       role: string;
       isActive: boolean;
     } & User_Key;
-      branch: {
+    branch: {
+      id: UUIDString;
+      name: string;
+      branchCode: string;
+    } & Branch_Key;
+    subjects: ({
+      id: UUIDString;
+      subject: {
         id: UUIDString;
         name: string;
-        branchCode: string;
-      } & Branch_Key;
-        subjects: ({
+        code: string;
+        status: string;
+      } & Subject_Key;
+    } & TeacherSubject_Key)[];
+    assignments: ({
+      id: UUIDString;
+      sectionId: UUIDString;
+      isClassTeacher: boolean;
+      isActive: boolean;
+      section: {
+        id: UUIDString;
+        name: string;
+        academicYear: number;
+        classTeacherId?: UUIDString | null;
+        students_on_section: ({
           id: UUIDString;
-          subject: {
-            id: UUIDString;
-            name: string;
+        } & Student_Key)[];
+        profileActiveStudents: ({
+          id: UUIDString;
+          studentId: string;
+          fullName: string;
+          status: string;
+        } & Student_Key)[];
+        profileSectionAttendance: ({
+          id: UUIDString;
+          studentId: UUIDString;
+          attendanceDate: DateString;
+          status: string;
+          markedById: UUIDString;
+        } & Attendance_Key)[];
+        classTeacher?: {
+          id: UUIDString;
+          fullName: string;
+          phoneNumber: string;
+        } & User_Key;
+        academicClass: {
+          id: UUIDString;
+          name: string;
+          wing: {
             code: string;
-            status: string;
-          } & Subject_Key;
-        } & TeacherSubject_Key)[];
-          assignments: ({
-            id: UUIDString;
-            sectionId: UUIDString;
-            isClassTeacher: boolean;
-            isActive: boolean;
-            section: {
-              id: UUIDString;
-              name: string;
-              academicYear: number;
-              classTeacherId?: UUIDString | null;
-              students_on_section: ({
-                id: UUIDString;
-              } & Student_Key)[];
-                profileActiveStudents: ({
-                  id: UUIDString;
-                  studentId: string;
-                  fullName: string;
-                  status: string;
-                } & Student_Key)[];
-                  profileSectionAttendance: ({
-                    id: UUIDString;
-                    studentId: UUIDString;
-                    attendanceDate: DateString;
-                    status: string;
-                    markedById: UUIDString;
-                  } & Attendance_Key)[];
-                    classTeacher?: {
-                      id: UUIDString;
-                      fullName: string;
-                      phoneNumber: string;
-                    } & User_Key;
-                      academicClass: {
-                        id: UUIDString;
-                        name: string;
-                        wing: {
-                          code: string;
-                          name: string;
-                        };
-                      } & AcademicClass_Key;
-            } & Section_Key;
-          } & TeacherSectionAssignment_Key)[];
-            attendanceMarked: {
-              profileMarkedAttendance: ({
-                id: UUIDString;
-                attendanceDate: DateString;
-                status: string;
-                sectionId: UUIDString;
-              } & Attendance_Key)[];
-            };
+            name: string;
+          };
+        } & AcademicClass_Key;
+      } & Section_Key;
+    } & TeacherSectionAssignment_Key)[];
+    attendanceMarked: {
+      profileMarkedAttendance: ({
+        id: UUIDString;
+        attendanceDate: DateString;
+        status: string;
+        sectionId: UUIDString;
+      } & Attendance_Key)[];
+    };
   } & Teacher_Key;
 }
 ```
@@ -8757,54 +8757,54 @@ export interface GetTeacherDashboardData {
         sectionId: UUIDString;
       } & Attendance_Key)[];
     } & User_Key;
-      teacherSubjects_on_teacher: ({
+    teacherSubjects_on_teacher: ({
+      id: UUIDString;
+      subject: {
         id: UUIDString;
-        subject: {
+        name: string;
+        code: string;
+      } & Subject_Key;
+    } & TeacherSubject_Key)[];
+    teacherSectionAssignments_on_teacher: ({
+      id: UUIDString;
+      sectionId: UUIDString;
+      isClassTeacher: boolean;
+      isActive: boolean;
+      section: {
+        id: UUIDString;
+        name: string;
+        academicYear: number;
+        classTeacherId?: UUIDString | null;
+        students_on_section: ({
+          id: UUIDString;
+        } & Student_Key)[];
+        dashboardActiveStudents: ({
+          id: UUIDString;
+          studentId: string;
+          fullName: string;
+          status: string;
+        } & Student_Key)[];
+        dashboardSectionAttendance: ({
+          id: UUIDString;
+          studentId: UUIDString;
+          attendanceDate: DateString;
+          status: string;
+          markedById: UUIDString;
+        } & Attendance_Key)[];
+        classTeacher?: {
+          id: UUIDString;
+          fullName: string;
+        } & User_Key;
+        academicClass: {
           id: UUIDString;
           name: string;
-          code: string;
-        } & Subject_Key;
-      } & TeacherSubject_Key)[];
-        teacherSectionAssignments_on_teacher: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          isClassTeacher: boolean;
-          isActive: boolean;
-          section: {
-            id: UUIDString;
+          wing: {
+            code: string;
             name: string;
-            academicYear: number;
-            classTeacherId?: UUIDString | null;
-            students_on_section: ({
-              id: UUIDString;
-            } & Student_Key)[];
-              dashboardActiveStudents: ({
-                id: UUIDString;
-                studentId: string;
-                fullName: string;
-                status: string;
-              } & Student_Key)[];
-                dashboardSectionAttendance: ({
-                  id: UUIDString;
-                  studentId: UUIDString;
-                  attendanceDate: DateString;
-                  status: string;
-                  markedById: UUIDString;
-                } & Attendance_Key)[];
-                  classTeacher?: {
-                    id: UUIDString;
-                    fullName: string;
-                  } & User_Key;
-                    academicClass: {
-                      id: UUIDString;
-                      name: string;
-                      wing: {
-                        code: string;
-                        name: string;
-                      };
-                    } & AcademicClass_Key;
-          } & Section_Key;
-        } & TeacherSectionAssignment_Key)[];
+          };
+        } & AcademicClass_Key;
+      } & Section_Key;
+    } & TeacherSectionAssignment_Key)[];
   } & Teacher_Key;
 }
 ```
@@ -9054,11 +9054,11 @@ export interface GetSectionsForTeacherAssignmentData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      classTeacher?: {
-        id: UUIDString;
-        fullName: string;
-        phoneNumber: string;
-      } & User_Key;
+    classTeacher?: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+    } & User_Key;
   } & Section_Key)[];
 }
 ```
@@ -9196,11 +9196,11 @@ export interface GetAccountantsData {
       staffType?: string | null;
       isActive: boolean;
     } & User_Key;
-      branch: {
-        id: UUIDString;
-        name: string;
-        branchCode: string;
-      } & Branch_Key;
+    branch: {
+      id: UUIDString;
+      name: string;
+      branchCode: string;
+    } & Branch_Key;
   } & Accountant_Key)[];
 }
 ```
@@ -9342,11 +9342,11 @@ export interface GetAccountantProfileData {
       staffType?: string | null;
       isActive: boolean;
     } & User_Key;
-      branch: {
-        id: UUIDString;
-        name: string;
-        branchCode: string;
-      } & Branch_Key;
+    branch: {
+      id: UUIDString;
+      name: string;
+      branchCode: string;
+    } & Branch_Key;
   } & Accountant_Key;
 }
 ```
@@ -9717,73 +9717,73 @@ export interface GetClassTeacherAssignmentsData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      classTeacher?: {
+    classTeacher?: {
+      id: UUIDString;
+      fullName: string;
+      phoneNumber: string;
+      employeeId?: string | null;
+      staffType?: string | null;
+      role: string;
+    } & User_Key;
+  } & Section_Key)[];
+  teacherSectionAssignments: ({
+    id: UUIDString;
+    teacherId: UUIDString;
+    sectionId: UUIDString;
+    isClassTeacher: boolean;
+    isActive: boolean;
+    createdAt: TimestampString;
+    updatedAt: TimestampString;
+    assignedBy?: {
+      id: UUIDString;
+      fullName: string;
+      role: string;
+    } & User_Key;
+    teacher: {
+      id: UUIDString;
+      employeeId: string;
+      staffType: string;
+      user: {
         id: UUIDString;
         fullName: string;
         phoneNumber: string;
         employeeId?: string | null;
-        staffType?: string | null;
         role: string;
       } & User_Key;
-  } & Section_Key)[];
-    teacherSectionAssignments: ({
+    } & Teacher_Key;
+    section: {
       id: UUIDString;
-      teacherId: UUIDString;
-      sectionId: UUIDString;
-      isClassTeacher: boolean;
-      isActive: boolean;
-      createdAt: TimestampString;
-      updatedAt: TimestampString;
-      assignedBy?: {
+      branchId: UUIDString;
+      wingId: UUIDString;
+      name: string;
+      academicYear: number;
+      classTeacherId?: UUIDString | null;
+      academicClass: {
         id: UUIDString;
-        fullName: string;
-        role: string;
-      } & User_Key;
-        teacher: {
+        name: string;
+        sortOrder: number;
+        wing: {
           id: UUIDString;
-          employeeId: string;
-          staffType: string;
-          user: {
-            id: UUIDString;
-            fullName: string;
-            phoneNumber: string;
-            employeeId?: string | null;
-            role: string;
-          } & User_Key;
-        } & Teacher_Key;
-          section: {
-            id: UUIDString;
-            branchId: UUIDString;
-            wingId: UUIDString;
-            name: string;
-            academicYear: number;
-            classTeacherId?: UUIDString | null;
-            academicClass: {
-              id: UUIDString;
-              name: string;
-              sortOrder: number;
-              wing: {
-                id: UUIDString;
-                code: string;
-                name: string;
-              } & Wing_Key;
-            } & AcademicClass_Key;
-          } & Section_Key;
-    } & TeacherSectionAssignment_Key)[];
-      students: ({
-        id: UUIDString;
-        sectionId: UUIDString;
-      } & Student_Key)[];
-        coordinators: ({
-          id: UUIDString;
-          wing: string;
-          user: {
-            id: UUIDString;
-            fullName: string;
-            employeeId?: string | null;
-            phoneNumber: string;
-          } & User_Key;
-        } & Coordinator_Key)[];
+          code: string;
+          name: string;
+        } & Wing_Key;
+      } & AcademicClass_Key;
+    } & Section_Key;
+  } & TeacherSectionAssignment_Key)[];
+  students: ({
+    id: UUIDString;
+    sectionId: UUIDString;
+  } & Student_Key)[];
+  coordinators: ({
+    id: UUIDString;
+    wing: string;
+    user: {
+      id: UUIDString;
+      fullName: string;
+      employeeId?: string | null;
+      phoneNumber: string;
+    } & User_Key;
+  } & Coordinator_Key)[];
 }
 ```
 ### Using `GetClassTeacherAssignments`'s action shortcut function
@@ -9935,10 +9935,10 @@ export interface GetClassFeesData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      createdBy: {
-        id: UUIDString;
-        fullName: string;
-      } & User_Key;
+    createdBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
   } & AcademicYearFeeTemplate_Key)[];
 }
 ```
@@ -10068,78 +10068,78 @@ export interface GetStudentFeeProfileData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      section: {
+    section: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+    } & Parent_Key;
+    branch: {
+      id: UUIDString;
+      name: string;
+      branchCode: string;
+    } & Branch_Key;
+    profileFeePlans: ({
+      id: UUIDString;
+      academicYear: number;
+      classFeeTemplateId?: UUIDString | null;
+      term1Fee: number;
+      term2Fee: number;
+      term3Fee: number;
+      booksFee: number;
+      transportFee: number;
+      concessionType?: string | null;
+      concessionValue: number;
+      concessionAmount: number;
+      grossAmount: number;
+      totalAmount: number;
+      isActive: boolean;
+      createdAt: TimestampString;
+      classFeeTemplate?: {
         id: UUIDString;
-        name: string;
-      } & Section_Key;
-        parent: {
+        totalTuitionFee: number;
+        applyToFuture: boolean;
+        status: string;
+      } & AcademicYearFeeTemplate_Key;
+      createdBy: {
+        id: UUIDString;
+        fullName: string;
+      } & User_Key;
+      profileFeeItems: ({
+        id: UUIDString;
+        amount: number;
+        category: {
+          id: UUIDString;
+          name: string;
+          status: string;
+        } & FeeCategory_Key;
+      } & StudentFeeItem_Key)[];
+      profileFeePayments: ({
+        id: UUIDString;
+        amount: number;
+        paymentDate: DateString;
+        paymentMode: string;
+        referenceNumber?: string | null;
+        receiptNumber: string;
+        status: string;
+        reversedAt?: TimestampString | null;
+        reverseReason?: string | null;
+        remarks?: string | null;
+        collectedBy: {
           id: UUIDString;
           fullName: string;
-          fatherName?: string | null;
-          motherName?: string | null;
-          phoneNumber: string;
-        } & Parent_Key;
-          branch: {
-            id: UUIDString;
-            name: string;
-            branchCode: string;
-          } & Branch_Key;
-            profileFeePlans: ({
-              id: UUIDString;
-              academicYear: number;
-              classFeeTemplateId?: UUIDString | null;
-              term1Fee: number;
-              term2Fee: number;
-              term3Fee: number;
-              booksFee: number;
-              transportFee: number;
-              concessionType?: string | null;
-              concessionValue: number;
-              concessionAmount: number;
-              grossAmount: number;
-              totalAmount: number;
-              isActive: boolean;
-              createdAt: TimestampString;
-              classFeeTemplate?: {
-                id: UUIDString;
-                totalTuitionFee: number;
-                applyToFuture: boolean;
-                status: string;
-              } & AcademicYearFeeTemplate_Key;
-                createdBy: {
-                  id: UUIDString;
-                  fullName: string;
-                } & User_Key;
-                  profileFeeItems: ({
-                    id: UUIDString;
-                    amount: number;
-                    category: {
-                      id: UUIDString;
-                      name: string;
-                      status: string;
-                    } & FeeCategory_Key;
-                  } & StudentFeeItem_Key)[];
-                    profileFeePayments: ({
-                      id: UUIDString;
-                      amount: number;
-                      paymentDate: DateString;
-                      paymentMode: string;
-                      referenceNumber?: string | null;
-                      receiptNumber: string;
-                      status: string;
-                      reversedAt?: TimestampString | null;
-                      reverseReason?: string | null;
-                      remarks?: string | null;
-                      collectedBy: {
-                        id: UUIDString;
-                        fullName: string;
-                      } & User_Key;
-                        reversedBy?: {
-                          id: UUIDString;
-                          fullName: string;
-                        } & User_Key;
-                    } & FeePayment_Key)[];
-            } & StudentFeePlan_Key)[];
+        } & User_Key;
+        reversedBy?: {
+          id: UUIDString;
+          fullName: string;
+        } & User_Key;
+      } & FeePayment_Key)[];
+    } & StudentFeePlan_Key)[];
   } & Student_Key;
 }
 ```
@@ -10280,24 +10280,24 @@ export interface GetPaymentHistoryData {
           name: string;
         } & Wing_Key;
       } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-        } & Section_Key;
-          branch: {
-            id: UUIDString;
-            name: string;
-            branchCode: string;
-          } & Branch_Key;
-    } & Student_Key;
-      collectedBy: {
+      section: {
         id: UUIDString;
-        fullName: string;
-      } & User_Key;
-        reversedBy?: {
-          id: UUIDString;
-          fullName: string;
-        } & User_Key;
+        name: string;
+      } & Section_Key;
+      branch: {
+        id: UUIDString;
+        name: string;
+        branchCode: string;
+      } & Branch_Key;
+    } & Student_Key;
+    collectedBy: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
+    reversedBy?: {
+      id: UUIDString;
+      fullName: string;
+    } & User_Key;
   } & FeePayment_Key)[];
 }
 ```
@@ -10548,42 +10548,42 @@ export interface GetFeeReportsData {
         name: string;
       } & Wing_Key;
     } & AcademicClass_Key;
-      section: {
+    section: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    reportFeePlans: ({
+      id: UUIDString;
+      academicYear: number;
+      classFeeTemplateId?: UUIDString | null;
+      term1Fee: number;
+      term2Fee: number;
+      term3Fee: number;
+      booksFee: number;
+      transportFee: number;
+      concessionType?: string | null;
+      concessionValue: number;
+      concessionAmount: number;
+      grossAmount: number;
+      totalAmount: number;
+      isActive: boolean;
+      reportFeePayments: ({
         id: UUIDString;
-        name: string;
-      } & Section_Key;
-        reportFeePlans: ({
+        amount: number;
+        paymentDate: DateString;
+        paymentMode: string;
+        receiptNumber: string;
+        status: string;
+      } & FeePayment_Key)[];
+      reportFeeItems: ({
+        id: UUIDString;
+        amount: number;
+        category: {
           id: UUIDString;
-          academicYear: number;
-          classFeeTemplateId?: UUIDString | null;
-          term1Fee: number;
-          term2Fee: number;
-          term3Fee: number;
-          booksFee: number;
-          transportFee: number;
-          concessionType?: string | null;
-          concessionValue: number;
-          concessionAmount: number;
-          grossAmount: number;
-          totalAmount: number;
-          isActive: boolean;
-          reportFeePayments: ({
-            id: UUIDString;
-            amount: number;
-            paymentDate: DateString;
-            paymentMode: string;
-            receiptNumber: string;
-            status: string;
-          } & FeePayment_Key)[];
-            reportFeeItems: ({
-              id: UUIDString;
-              amount: number;
-              category: {
-                id: UUIDString;
-                name: string;
-              } & FeeCategory_Key;
-            } & StudentFeeItem_Key)[];
-        } & StudentFeePlan_Key)[];
+          name: string;
+        } & FeeCategory_Key;
+      } & StudentFeeItem_Key)[];
+    } & StudentFeePlan_Key)[];
   } & Student_Key)[];
 }
 ```
@@ -10722,40 +10722,40 @@ export interface GetGlobalStudentExplorerData {
       name: string;
       branchCode: string;
     } & Branch_Key;
-      academicClass: {
+    academicClass: {
+      id: UUIDString;
+      name: string;
+      wing: {
         id: UUIDString;
+        code: string;
         name: string;
-        wing: {
-          id: UUIDString;
-          code: string;
-          name: string;
-        } & Wing_Key;
-      } & AcademicClass_Key;
-        section: {
-          id: UUIDString;
-          name: string;
-        } & Section_Key;
-          parent: {
-            id: UUIDString;
-            fullName: string;
-            fatherName?: string | null;
-            motherName?: string | null;
-            phoneNumber: string;
-            email?: string | null;
-          } & Parent_Key;
-            explorerAttendance: ({
-              id: UUIDString;
-              status: string;
-            } & Attendance_Key)[];
-              explorerFeePlans: ({
-                id: UUIDString;
-                totalAmount: number;
-                explorerFeePayments: ({
-                  id: UUIDString;
-                  amount: number;
-                  status: string;
-                } & FeePayment_Key)[];
-              } & StudentFeePlan_Key)[];
+      } & Wing_Key;
+    } & AcademicClass_Key;
+    section: {
+      id: UUIDString;
+      name: string;
+    } & Section_Key;
+    parent: {
+      id: UUIDString;
+      fullName: string;
+      fatherName?: string | null;
+      motherName?: string | null;
+      phoneNumber: string;
+      email?: string | null;
+    } & Parent_Key;
+    explorerAttendance: ({
+      id: UUIDString;
+      status: string;
+    } & Attendance_Key)[];
+    explorerFeePlans: ({
+      id: UUIDString;
+      totalAmount: number;
+      explorerFeePayments: ({
+        id: UUIDString;
+        amount: number;
+        status: string;
+      } & FeePayment_Key)[];
+    } & StudentFeePlan_Key)[];
   } & Student_Key)[];
 }
 ```
@@ -10882,47 +10882,47 @@ export interface GetGlobalReportsData {
     status: string;
     isActive: boolean;
   } & Branch_Key)[];
-    users: ({
+  users: ({
+    id: UUIDString;
+    branchId?: UUIDString | null;
+    role: string;
+    isActive: boolean;
+  } & User_Key)[];
+  students: ({
+    id: UUIDString;
+    branchId: UUIDString;
+    status: string;
+    isActive: boolean;
+    admissionDate: DateString;
+  } & Student_Key)[];
+  attendances: ({
+    id: UUIDString;
+    sectionId: UUIDString;
+    status: string;
+    attendanceDate: DateString;
+    section: {
       id: UUIDString;
-      branchId?: UUIDString | null;
-      role: string;
-      isActive: boolean;
-    } & User_Key)[];
-      students: ({
-        id: UUIDString;
-        branchId: UUIDString;
-        status: string;
-        isActive: boolean;
-        admissionDate: DateString;
-      } & Student_Key)[];
-        attendances: ({
-          id: UUIDString;
-          sectionId: UUIDString;
-          status: string;
-          attendanceDate: DateString;
-          section: {
-            id: UUIDString;
-            branchId: UUIDString;
-          } & Section_Key;
-        } & Attendance_Key)[];
-          studentFeePlans: ({
-            id: UUIDString;
-            studentId: UUIDString;
-            grossAmount: number;
-            concessionAmount: number;
-            totalAmount: number;
-            isActive: boolean;
-            student: {
-              id: UUIDString;
-              branchId: UUIDString;
-            } & Student_Key;
-              reportPayments: ({
-                id: UUIDString;
-                amount: number;
-                status: string;
-                paymentDate: DateString;
-              } & FeePayment_Key)[];
-          } & StudentFeePlan_Key)[];
+      branchId: UUIDString;
+    } & Section_Key;
+  } & Attendance_Key)[];
+  studentFeePlans: ({
+    id: UUIDString;
+    studentId: UUIDString;
+    grossAmount: number;
+    concessionAmount: number;
+    totalAmount: number;
+    isActive: boolean;
+    student: {
+      id: UUIDString;
+      branchId: UUIDString;
+    } & Student_Key;
+    reportPayments: ({
+      id: UUIDString;
+      amount: number;
+      status: string;
+      paymentDate: DateString;
+    } & FeePayment_Key)[];
+  } & StudentFeePlan_Key)[];
 }
 ```
 ### Using `GetGlobalReports`'s action shortcut function
