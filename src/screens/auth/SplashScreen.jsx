@@ -106,7 +106,7 @@ const SplashScreen = ({ onFinish }) => {
             // Short hold delay of 1200ms before transition (Total duration = 1300ms + 1200ms = 2.5 seconds)
             setTimeout(() => {
                 onFinish?.();
-            }, 1200);
+            }, 1500);
         });
     }, [
         logoScale,
@@ -144,7 +144,7 @@ const SplashScreen = ({ onFinish }) => {
                     />
                 </Animated.View>
 
-                {/* School Name Text */}
+                {/* School Title Block */}
                 <Animated.View
                     style={[
                         styles.titleContainer,
@@ -154,35 +154,44 @@ const SplashScreen = ({ onFinish }) => {
                         }
                     ]}
                 >
-                    <Text style={styles.schoolName}>
+                    <Text 
+                        style={styles.schoolName}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit
+                    >
                         NADIMPALLI SATYANARAYANA RAJU
                     </Text>
-                    <Text style={styles.schoolSubName}>
-                        INTERNATIONAL TECHNO SCHOOL
-                    </Text>
-                </Animated.View>
 
-                {/* Motto & Taglines with Dividers */}
-                <Animated.View style={[styles.mottoContainer, { opacity: mottoOpacity }]}>
-                    {/* Divider Row 1 */}
+                    {/* Divider Row 1 (Line with green dots) */}
                     <View style={styles.dividerRow}>
                         <View style={styles.greenDot} />
                         <Animated.View style={[styles.line, { transform: [{ scaleX: dividerScaleX }] }]} />
                         <View style={styles.greenDot} />
                     </View>
 
+                    <Text 
+                        style={styles.schoolSubName}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit
+                    >
+                        INTERNATIONAL TECHNO SCHOOL
+                    </Text>
+                </Animated.View>
+
+                {/* Motto & Taglines Block */}
+                <Animated.View style={[styles.mottoContainer, { opacity: mottoOpacity }]}>
                     {/* Motto */}
                     <Text style={styles.motto}>
                         UNITY • LEARNING • GROWTH
                     </Text>
 
-                    {/* Divider Row 2 with Sanskrit Text */}
+                    {/* Sanskrit Row with lines on both sides and green dots */}
                     <View style={styles.sanskritRow}>
                         <View style={styles.greenDot} />
                         <Animated.View style={[styles.lineHalf, { transform: [{ scaleX: dividerScaleX }] }]} />
                         
                         <Animated.Text style={[styles.sanskritText, { opacity: sanskritOpacity }]}>
-                            जज्ञानं परमं बलम्
+                            ज्ज्ञानं परमं बलम्
                         </Animated.Text>
                         
                         <Animated.View style={[styles.lineHalf, { transform: [{ scaleX: dividerScaleX }] }]} />
@@ -199,58 +208,13 @@ const SplashScreen = ({ onFinish }) => {
     );
 };
 
-const LoadingDots = () => {
-    const dot1 = useRef(new Animated.Value(0.3)).current;
-    const dot2 = useRef(new Animated.Value(0.3)).current;
-    const dot3 = useRef(new Animated.Value(0.3)).current;
-
-    useEffect(() => {
-        const animateDot = (dot, delay) =>
-            Animated.loop(
-                Animated.sequence([
-                    Animated.delay(delay),
-                    Animated.timing(dot, {
-                        toValue: 1,
-                        duration: 350,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(dot, {
-                        toValue: 0.3,
-                        duration: 350,
-                        useNativeDriver: true,
-                    }),
-                ])
-            );
-
-        Animated.parallel([
-            animateDot(dot1, 0),
-            animateDot(dot2, 120),
-            animateDot(dot3, 240),
-        ]).start();
-    }, [dot1, dot2, dot3]);
-
-    return (
-        <View style={styles.loadingRow}>
-            {[dot1, dot2, dot3].map((dot, index) => (
-                <Animated.View
-                    key={index}
-                    style={[
-                        styles.dot,
-                        { opacity: dot },
-                    ]}
-                />
-            ))}
-        </View>
-    );
-};
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 24,
+        paddingHorizontal: 20,
     },
 
     content: {
@@ -261,86 +225,89 @@ const styles = StyleSheet.create({
 
     titleContainer: {
         alignItems: 'center',
+        width: '100%',
         marginTop: 20,
     },
 
     mottoContainer: {
         alignItems: 'center',
         width: '100%',
+        marginTop: 20,
     },
 
     logo: {
-        width: 180,
-        height: 288,
-        marginBottom: 20,
+        width: 200,
+        height: 320,
+        marginBottom: 15,
     },
 
     schoolName: {
         color: '#1F3E66',
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: 'bold',
+        fontFamily: 'serif',
         letterSpacing: 0.5,
         textAlign: 'center',
-        lineHeight: 22,
+        width: '100%',
     },
 
     schoolSubName: {
-        marginTop: 4,
         color: '#1F3E66',
-        fontSize: 13,
+        fontSize: 13.5,
         fontWeight: 'bold',
-        letterSpacing: 1.5,
+        letterSpacing: 2.2,
         textAlign: 'center',
+        width: '100%',
     },
 
     dividerRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '85%',
-        marginTop: 20,
-        marginBottom: 12,
+        width: '90%',
+        marginTop: 10,
+        marginBottom: 10,
     },
 
     sanskritRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '85%',
-        marginTop: 14,
-        marginBottom: 10,
+        width: '90%',
+        marginTop: 12,
+        marginBottom: 12,
     },
 
     greenDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
+        width: 6,
+        height: 6,
+        borderRadius: 3,
         backgroundColor: '#3DAE49',
     },
 
     line: {
         flex: 1,
         height: 1,
-        backgroundColor: '#B0B0B0',
+        backgroundColor: '#4A607A',
         marginHorizontal: 10,
     },
 
     lineHalf: {
         flex: 1,
         height: 1,
-        backgroundColor: '#B0B0B0',
+        backgroundColor: '#4A607A',
         marginHorizontal: 10,
     },
 
     motto: {
         color: '#3DAE49',
         fontSize: 13,
-        letterSpacing: 2,
+        letterSpacing: 3,
         fontWeight: 'bold',
         textAlign: 'center',
     },
 
     sanskritText: {
         color: '#1F3E66',
-        fontSize: 17,
+        fontSize: 16.5,
         fontWeight: 'bold',
         textAlign: 'center',
         marginHorizontal: 10,
@@ -348,8 +315,8 @@ const styles = StyleSheet.create({
 
     tagline: {
         color: '#3DAE49',
-        fontSize: 13,
-        fontWeight: 'bold',
+        fontSize: 12.5,
+        fontWeight: '600',
         fontStyle: 'italic',
         textAlign: 'center',
         marginTop: 6,
